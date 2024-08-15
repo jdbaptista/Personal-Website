@@ -1,5 +1,5 @@
 var savedColorScheme = {
-    backgroundColor: "#1F2020",
+    backgroundColor: "#252526",
     mainColor: "#4A7856",
     boldColor: "#074B35",
     accentColor: "#D8CF6F",
@@ -34,4 +34,66 @@ function toggleDarkMode(caller) {
     savedColorScheme.accentColor = tempColorScheme.accentColor;
     savedColorScheme.textColor = tempColorScheme.textColor;
     savedColorScheme.buttonImgSrc = tempColorScheme.buttonImgSrc;
+}
+
+function navbarTransitionEnd(ev) {
+    console.log("running navbarTransitionEnd");
+    var navbar = document.querySelector('nav');
+    navbar.style.position = 'sticky';
+    navbar.style.top = '0px';
+    navbar.style.transform = 'none';
+    navbar.style.transition = 'none';
+
+    navbar.removeEventListener("transitionend", navbarTransitionEnd);
+}
+
+function navbarTransitionEndStatic(ev) {
+    console.log("running navbarTransitionEndStatic");
+    var navbar = document.querySelector('nav');
+    navbar.style.position = 'static';
+    navbar.style.transform = 'none';
+    navbar.style.transition = 'none';
+}
+
+function stickNavbar() {
+    console.log("sticking navbar");
+    var navbar = document.querySelector('nav');
+    navbar.style.position = 'sticky';
+    navbar.style.top = '-6vh';
+    navbar.style.transform = 'translateY(6vh)';
+    navbar.style.transition = 'transform 0.2s';
+}
+
+function unstickNavbar() {
+    console.log("unsticking navbar");
+    var navbar = document.querySelector('nav');
+    navbar.style.position = 'sticky';
+    navbar.style.transform = 'translateY(-6vh)';
+    navbar.style.transition = 'transform 0.2s';
+}
+
+var lastScrollUp = false;
+var oldScroll = window.scrollY;
+
+window.onscroll = function(event) {
+    var navbar = document.querySelector('nav');
+    if (this.scrollY <= navbar.offsetHeight) {
+        navbar.removeEventListener("transitionend", navbarTransitionEnd);
+        navbar.removeEventListener("transitionend", navbarTransitionEndStatic);
+        navbar.style.position = 'static';
+        navbar.style.transform = 'none';
+        navbar.style.transition = 'none';
+        lastScrollUp = false;
+    } else if (oldScroll > this.scrollY && !lastScrollUp) {
+        stickNavbar();
+        navbar.removeEventListener("transitionend", navbarTransitionEndStatic);
+        navbar.addEventListener("transitionend", navbarTransitionEnd);
+        lastScrollUp = true;
+    } else if (lastScrollUp && oldScroll < this.scrollY) {
+        unstickNavbar();
+        navbar.removeEventListener("transitionend", navbarTransitionEnd);
+        navbar.addEventListener("transitionend", navbarTransitionEndStatic);
+        lastScrollUp = false;
+    }
+    oldScroll = this.scrollY;
 }
