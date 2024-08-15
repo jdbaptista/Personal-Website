@@ -4,7 +4,7 @@ var savedColorScheme = {
     boldColor: "#074B35",
     accentColor: "#D8CF6F",
     textColor: "#ffffff",
-    buttonImgSrc: "weather-sun-svgrepo-com.svg"
+    buttonImgSrc: "weather-moon-svgrepo-com.svg"
 }
 
 function toggleDarkMode(caller) {

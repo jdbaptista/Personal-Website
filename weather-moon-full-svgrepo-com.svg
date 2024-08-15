@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg fill="#000000" width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <style>.cls-1{fill:none;}</style>
+  </defs>
+  <g id="Artwork">
+    <path d="M20.14,14.84a.58.58,0,0,0-.19,0H19.9l-.25.11h0a8.3,8.3,0,0,1-2.95.53A8.51,8.51,0,0,1,8.17,7a8,8,0,0,1,.39-2.5.79.79,0,0,0,.06-.22,1.1,1.1,0,0,0,0-.18,1,1,0,0,0-1-1,.86.86,0,0,0-.36.07h0L7,3.32A10,10,0,1,0,21,16.39a0,0,0,0,1,0,0l.09-.19a.75.75,0,0,0,0-.16,1.1,1.1,0,0,0,0-.18A1,1,0,0,0,20.14,14.84ZM12,20.5A8.5,8.5,0,0,1,6.83,5.26,9.29,9.29,0,0,0,6.67,7a10,10,0,0,0,12.4,9.71A8.54,8.54,0,0,1,12,20.5Z" style=""/>
+    <rect class="cls-1" height="24" width="24"/>
+  </g>
+  <rect x="5.822" y="3.891" width="2.411" height="10.989" style="stroke: rgb(0, 0, 0); paint-order: fill;" transform="matrix(0.906121, -0.423018, 0, 1.103605, 0, 3.652759)"/>
+  <path d="M 16.885 5.536 L 23.282 7.964 L 10.487 7.964 L 16.885 5.536 Z" style="stroke: rgb(0, 0, 0); transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0.01312, -0.999914, 0.999947, 0.0106, -12.591692, 5.218085)" bx:shape="triangle 10.487 5.536 12.795 2.428 0.5 0 1@f4fef94b"/>
+  <path d="M 12.771 7.277 L 17.477 13.739 L 8.064 13.739 L 12.771 7.277 Z" style="stroke: rgb(0, 0, 0); transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(-0.042189, 0.99911, -0.968604, -0.764623, -1.4036, 7.471647)" bx:shape="triangle 8.064 7.277 9.413 6.462 0.5 0 1@4ec126fb"/>
+  <path d="M 6.898 16.709 L 7.709 18.801 L 6.086 18.801 L 6.898 16.709 Z" style="stroke: rgb(0, 0, 0); transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0.894442, 0.447184, -0.447184, 0.894442, 0.124879, 0.156094)" bx:shape="triangle 6.086 16.709 1.623 2.092 0.5 0 1@4a295592"/>
+  <path d="M 16.76 9.259 L 20.788 13.093 L 12.731 13.093 L 16.76 9.259 Z" style="stroke: rgb(0, 0, 0); transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(-0.996791, -0.080044, 0.023611, -1.001323, -1.486704, 6.874759)" bx:shape="triangle 12.731 9.259 8.057 3.834 0.5 0 1@4a22102d"/>
+</svg>
