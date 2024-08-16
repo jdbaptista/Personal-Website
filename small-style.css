@@ -1,0 +1,44 @@
+/* md */
+@media screen and (max-width: 1000px) and (min-width: 641px) {
+    /* NAVBAR */
+    #nav-logo {
+        font-size: 25px;
+    }
+    
+    button.nav-button {
+        font-size: 15px;
+        margin: 5px;
+        width: max(70px, 8vw);
+    }
+    
+    #dark-mode-button {
+        width: 70px;
+    }
+    
+    #nav-break {
+        height: 3px;
+    }
+    
+    /* ASIDE */
+    
+    #aside-grid {
+        margin-top: 30px;
+    }
+    
+    aside {
+
+        width: 180px;
+        top: 15vh;
+    }
+    
+    aside::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* MAIN SECTIONS */
+    
+    #main-content {
+        width: max(50vw, 350px);
+    }
+    
+}
