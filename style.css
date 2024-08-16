@@ -26,6 +26,17 @@ nav {
     grid-template: 1fr / 0.5fr min-content 1fr 1fr 0.5fr;
 }
 
+#nav-logo-container {
+    grid-column-start: 2;
+    width: max-content;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    align-self: center;
+}
+
 #nav-logo {
     grid-column-start: 2;
     width: max-content;
