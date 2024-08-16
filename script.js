@@ -72,12 +72,20 @@ var oldScroll = window.scrollY;
 window.onscroll = function(event) {
     var navbar = document.querySelector('nav');
     if (this.scrollY <= navbar.offsetHeight) {
-        navbar.removeEventListener("transitionend", navbarTransitionEnd);
-        navbar.removeEventListener("transitionend", navbarTransitionEndStatic);
-        navbar.style.position = 'static';
-        navbar.style.transform = 'none';
-        navbar.style.transition = 'none';
-        lastScrollUp = false;
+        if (oldScroll > this.scrollY) {
+            navbar.removeEventListener("transitionend", navbarTransitionEnd);
+            navbar.removeEventListener("transitionend", navbarTransitionEndStatic);
+            navbar.style.position = 'sticky';
+            navbar.style.top = '0px';
+            navbar.style.transform = 'none';
+            navbar.style.transition = 'none';
+            lastScrollUp = true;
+        } else {
+            navbar.style.position = 'static';
+            navbar.style.transform = 'none';
+            navbar.style.transition = 'none';
+            lastScrollUp = false;
+        }
     } else if (oldScroll > this.scrollY && !lastScrollUp) {
         stickNavbar();
         navbar.removeEventListener("transitionend", navbarTransitionEndStatic);
