@@ -3,8 +3,8 @@
     /* NAVBAR */
     #nav-logo {
         font-size: 25px;
-        align-self: center;
-        justify-self: center;
+        height: 70px;
+        text-align: center;
     }
     
     button.nav-button {
@@ -16,7 +16,6 @@
     }
     
     #dark-mode-button {
-        text-align: center;
         width: 65px;
     }
     
