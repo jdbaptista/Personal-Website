@@ -7,11 +7,14 @@
     
     button.nav-button {
         font-size: 14px;
-        margin: 5px;
-        width: max(70px, 8vw);
+        text-align: center;
+        margin: 5px 0px 5px 0px;
+        padding: 5px 0px 5px 0px;
+        width: 80px;
     }
     
     #dark-mode-button {
+        text-align: center;
         width: 65px;
     }
     

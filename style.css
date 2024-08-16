@@ -51,13 +51,14 @@ button.nav-button {
     text-align: center;
     color: var(--text-color);
     margin: 15px;
-    width: max(100px, 1vw);
+    width: 100px;
     border: none;
     outline: none;
     border-radius: 0.7em;
 }
 
 #dark-mode-button {
+    text-align: center;
     width: 70px;
 }
 
