@@ -1,5 +1,5 @@
 /* sm */
-@media screen and (max-width: 640px) and (min-width: 476px) {
+@media screen and (max-width: 640px) {
     nav {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
