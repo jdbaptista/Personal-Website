@@ -22,12 +22,14 @@
     
     button.nav-button {
         font-size: 12px;
-        margin: 0px;
-        width: 65px;
+        margin: 5px 0px 5px 0px;
+        padding: 5px 0px 5px 0px;
+        text-align: center;
+        width: 70px;
     }
     
     #dark-mode-button {
-        width: 30px;
+        width: 40px;
     }
 
     #dark-mode-button-img {
