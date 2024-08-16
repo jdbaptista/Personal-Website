@@ -65,6 +65,11 @@ button.nav-button:hover {
     color: var(--text-color);
 }
 
+#dark-mode-button-img {
+    height: 30px;
+    width: 30px;
+}
+
 #nav-break {
     height: 5px;
     background-color: var(--main-color);

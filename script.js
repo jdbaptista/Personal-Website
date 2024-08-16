@@ -37,18 +37,14 @@ function toggleDarkMode(caller) {
 }
 
 function navbarTransitionEnd(ev) {
-    console.log("running navbarTransitionEnd");
     var navbar = document.querySelector('nav');
     navbar.style.position = 'sticky';
     navbar.style.top = '0px';
     navbar.style.transform = 'none';
     navbar.style.transition = 'none';
-
-    navbar.removeEventListener("transitionend", navbarTransitionEnd);
 }
 
 function navbarTransitionEndStatic(ev) {
-    console.log("running navbarTransitionEndStatic");
     var navbar = document.querySelector('nav');
     navbar.style.position = 'static';
     navbar.style.transform = 'none';
@@ -56,20 +52,18 @@ function navbarTransitionEndStatic(ev) {
 }
 
 function stickNavbar() {
-    console.log("sticking navbar");
     var navbar = document.querySelector('nav');
     navbar.style.position = 'sticky';
-    navbar.style.top = '-6vh';
-    navbar.style.transform = 'translateY(6vh)';
-    navbar.style.transition = 'transform 0.2s';
+    navbar.style.top = '-' + navbar.offsetHeight.toString() + 'px';
+    navbar.style.transform = 'translateY(' + navbar.offsetHeight.toString() + 'px)';
+    navbar.style.transition = 'transform 0.3s';
 }
 
 function unstickNavbar() {
-    console.log("unsticking navbar");
     var navbar = document.querySelector('nav');
     navbar.style.position = 'sticky';
-    navbar.style.transform = 'translateY(-6vh)';
-    navbar.style.transition = 'transform 0.2s';
+    navbar.style.transform = 'translateY(-' + navbar.offsetHeight.toString() + 'px)';
+    navbar.style.transition = 'transform 0.3s';
 }
 
 var lastScrollUp = false;

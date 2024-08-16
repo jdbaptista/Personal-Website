@@ -23,11 +23,16 @@
     button.nav-button {
         font-size: 12px;
         margin: 0px;
-        width: max(60px, 8vw);
+        width: 65px;
     }
     
     #dark-mode-button {
-        width: 60px;
+        width: 30px;
+    }
+
+    #dark-mode-button-img {
+        height: 15px;
+        width: 15px;
     }
     
     #nav-break {
