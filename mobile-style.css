@@ -8,7 +8,7 @@
     #nav-logo {
         grid-row-start: 1;
         grid-column-start: 1;
-        font-size: 25px;
+        font-size: 20px;
         justify-self: center;
         align-self: center;
     }
@@ -21,13 +21,13 @@
     }
     
     button.nav-button {
-        font-size: 15px;
-        margin: 5px;
-        width: max(70px, 8vw);
+        font-size: 12px;
+        margin: 0px;
+        width: max(60px, 8vw);
     }
     
     #dark-mode-button {
-        width: 70px;
+        width: 60px;
     }
     
     #nav-break {
@@ -55,5 +55,6 @@
     
     #main-content {
         width: 75vw;
+        overflow-x: hidden;
     }
 }

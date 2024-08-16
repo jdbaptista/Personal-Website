@@ -39,6 +39,7 @@
     
     #main-content {
         width: max(50vw, 350px);
+        overflow-x: hidden;
     }
     
 }

@@ -110,6 +110,7 @@ aside::-webkit-scrollbar {
     font-family: var(--font-family);
     color: var(--text-color);
     font-size: 15px;
+    overflow-x: hidden;
 }
 
 
