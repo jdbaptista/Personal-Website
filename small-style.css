@@ -3,12 +3,14 @@
     /* NAVBAR */
     #nav-logo {
         font-size: 25px;
+        align-self: center;
+        justify-self: center;
     }
     
     button.nav-button {
         font-size: 14px;
         text-align: center;
-        margin: 5px 0px 5px 0px;
+        margin: 15px 0px 15px 0px;
         padding: 5px 0px 5px 0px;
         width: 90px;
     }
