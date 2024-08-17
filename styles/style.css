@@ -184,3 +184,7 @@ span.text-short {
 span.text-tiny {
     display: none;
 }
+
+a {
+    color: var(--text-color);
+}
