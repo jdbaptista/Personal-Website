@@ -1,5 +1,5 @@
 /* sm */
-@media screen and (max-width: 640px) and (min-width: 476px) {
+@media screen and (max-width: 840px) and (min-width: 476px) {
     nav {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
@@ -56,26 +56,23 @@
         height: 3px;
     }
     
-    /* ASIDE */
-    
     #aside-grid {
-        margin-top: 15px;
+        grid-template: 1fr / 1fr;
+    }
+    
+    #aside-separator {
+        display: none;
     }
     
     aside {
         display: none;
-        width: 100px;
-        top: 15vh;
     }
-    
-    aside::-webkit-scrollbar {
-        display: none;
-    }
+
     
     /* MAIN SECTIONS */
     
     #main-content {
-        width: 75vw;
-        overflow-x: hidden;
+        grid-column-start: 1;
+        width: 80vw;
     }
 }

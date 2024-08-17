@@ -56,26 +56,23 @@
         height: 3px;
     }
     
-    /* ASIDE */
-    
     #aside-grid {
-        margin-top: 15px;
+        grid-template: 1fr / 1fr;
+    }
+    
+    #aside-separator {
+        display: none;
     }
     
     aside {
         display: none;
-        width: 100px;
-        top: 15vh;
     }
-    
-    aside::-webkit-scrollbar {
-        display: none;
-    }
+
     
     /* MAIN SECTIONS */
     
     #main-content {
-        width: 75vw;
-        overflow-x: hidden;
+        grid-column-start: 1;
+        width: 80vw;
     }
 }

@@ -1,5 +1,5 @@
 /* md */
-@media screen and (max-width: 1000px) and (min-width: 641px) {
+@media screen and (max-width: 1400px) and (min-width: 840px) {
     /* NAVBAR */
     #nav-logo {
         font-size: 25px;
@@ -38,28 +38,13 @@
     #nav-break {
         height: 3px;
     }
-    
-    /* ASIDE */
-    
-    #aside-grid {
-        margin-top: 30px;
-    }
-    
-    aside {
 
-        width: 180px;
-        top: 15vh;
+    aside {
+        width: 200px;
     }
-    
-    aside::-webkit-scrollbar {
-        display: none;
-    }
-    
-    /* MAIN SECTIONS */
-    
+
     #main-content {
-        width: max(50vw, 350px);
-        overflow-x: hidden;
+        width: max(60vw, 500px);
     }
     
 }

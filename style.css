@@ -118,16 +118,19 @@ button.unlinked-nav-button:hover {
 
 #aside-grid {
     display: grid;
-    grid-template: 1fr / 1fr auto;
+    grid-template: 1fr / 5vw 3fr 3fr 3fr 5vw;
     margin-top: 50px;
 }
 
+#aside-separator {
+    min-width: 50px;
+}
+
 aside {
+    grid-column-start: 4;
     position: sticky;
     background-color: var(--background-color);
     height: 70vh;
-    margin-left: 50px;
-    margin-right: 5vw;
     width: 270px;
     top: 15vh;
     font-family: var(--font-family);
@@ -143,14 +146,24 @@ aside::-webkit-scrollbar {
 /* MAIN SECTIONS */
 
 #main-content {
+    grid-column-start: 2;
     justify-self: center;
     display: flex;
     flex-direction: column;
-    width: 50vw;
-    align-items: center;
+    width: 70vw;
+    align-items: flex-end;
     background-color: var(--background-color);
     font-family: var(--font-family);
     color: var(--text-color);
     font-size: 15px;
     overflow-x: hidden;
+}
+
+section {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 99%;
+    border-color: red;
+    border-width: 2px;
+    border-style: solid;
 }
