@@ -28,6 +28,7 @@ nav {
     background-color: var(--background-color);
     display: grid;
     grid-template: 1fr / 0.5fr min-content 1fr 1fr 0.5fr;
+    z-index: 1;
 }
 
 #nav-logo {

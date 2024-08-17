@@ -39,7 +39,7 @@ div.resume-item {
     flex-direction: row;
     justify-content: space-between;
     padding: 0px 30px 0px 30px;
-    font-size: 22px;
+    font-size: 16px;
     align-self: center;
     width: min(100%, 1000px);
 }
@@ -47,7 +47,7 @@ div.resume-item {
 div.resume-item-static {
     display: static;
     padding: 0px 30px 0px 30px;
-    font-size: 22px;
+    font-size: 16px;
     align-self: center;
     width: min(100%, 1000px);
 }
