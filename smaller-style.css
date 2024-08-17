@@ -1,43 +1,5 @@
 /* md */
-@media screen and (max-width: 1150px) and (min-width: 900px) {
-    /* NAVBAR */
-    #nav-logo {
-        font-size: 25px;
-        height: 77px;
-        line-height: 77px;
-        text-align: center;
-    }
-
-    a.nav-link {
-        margin: 15px 0px 15px 0px;
-    }
-    
-    button.nav-button {
-        font-size: 14px;
-        padding: 15px 0px 15px 0px;
-        margin: none;
-        width: 90px;
-    }
-    
-    /* A nav button that does not have an a.nav-link wrapper. */
-    button.unlinked-nav-button {
-        font-size: 14px;
-        margin: 15px 0px 15px 0px;
-        width: 90px;
-    }
-    
-    #dark-mode-button {
-        width: 65px;
-    }
-    
-    #dark-mode-button-img {
-        height: 25px;
-        width: 25px;
-    }
-
-    #nav-break {
-        height: 3px;
-    }
+@media screen and (max-width: 1150px) and (min-width: 901px) {
 
     aside {
         width: 150px;

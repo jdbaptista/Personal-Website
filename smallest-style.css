@@ -1,6 +1,6 @@
 /* md */
-@media screen and (max-width: 900px) and (min-width: 650px) {
-    /* NAVBAR */
+@media screen and (max-width: 900px) and (min-width: 701px) {
+    NAVBAR
     #nav-logo {
         font-size: 25px;
         height: 77px;
@@ -37,7 +37,6 @@
 
     #nav-break {
         grid-row: 3 / -1;
-        height: 3px;
     }
     
     #aside-grid {
