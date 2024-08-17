@@ -118,7 +118,7 @@ button.unlinked-nav-button:hover {
 
 #aside-grid {
     display: grid;
-    grid-template: 1fr / 5vw 3fr 3fr 3fr 5vw;
+    grid-template: 1fr / 5vw 70vw 5vw auto 5vw;
     margin-top: 50px;
 }
 
@@ -150,7 +150,7 @@ aside::-webkit-scrollbar {
     justify-self: center;
     display: flex;
     flex-direction: column;
-    width: 70vw;
+    width: 100%;
     align-items: flex-end;
     background-color: var(--background-color);
     font-family: var(--font-family);
@@ -163,6 +163,7 @@ section {
     margin-top: 10px;
     margin-bottom: 10px;
     width: 99%;
+    height: 500px;
     border-color: red;
     border-width: 2px;
     border-style: solid;

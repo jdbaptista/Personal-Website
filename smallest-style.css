@@ -1,26 +1,11 @@
-/* sm */
-@media screen and (max-width: 650px) and (min-width: 476px) {
-    nav {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr;
-    }
-    
+/* md */
+@media screen and (max-width: 900px) and (min-width: 650px) {
+    /* NAVBAR */
     #nav-logo {
-        grid-row-start: 1;
-        grid-column-start: 1;
         font-size: 25px;
-        margin-top: 25px;
-        height: 50px;
-        line-height: 50px;
-        justify-self: center;
-        align-self: center;
-    }
-
-    #nav-buttons {
-        grid-row-start: 2;
-        grid-column-start: 1;
-        justify-content: center;
-        align-content: center;
+        height: 77px;
+        line-height: 77px;
+        text-align: center;
     }
 
     a.nav-link {
@@ -28,29 +13,28 @@
     }
     
     button.nav-button {
-        font-size: 13px;
+        font-size: 14px;
         padding: 15px 0px 15px 0px;
         margin: none;
-        width: 80px;
+        width: 90px;
     }
     
     /* A nav button that does not have an a.nav-link wrapper. */
     button.unlinked-nav-button {
-        font-size: 13px;
+        font-size: 14px;
         margin: 15px 0px 15px 0px;
-        width: 80px;
+        width: 90px;
     }
     
     #dark-mode-button {
-        text-align: center;
-        width: 50px;
-    }
-
-    #dark-mode-button-img {
-        height: 20px;
-        width: 20px;
+        width: 65px;
     }
     
+    #dark-mode-button-img {
+        height: 25px;
+        width: 25px;
+    }
+
     #nav-break {
         grid-row: 3 / -1;
         height: 3px;
@@ -75,4 +59,5 @@
         grid-column-start: 1;
         width: 80vw;
     }
+    
 }
