@@ -7,12 +7,22 @@
         line-height: 70px;
         text-align: center;
     }
+
+    a.nav-link {
+        margin: 15px 0px 15px 0px;
+    }
     
     button.nav-button {
         font-size: 14px;
-        text-align: center;
+        padding: 15px 0px 15px 0px;
+        margin: none;
+        width: 90px;
+    }
+    
+    /* A nav button that does not have an a.nav-link wrapper. */
+    button.unlinked-nav-button {
+        font-size: 14px;
         margin: 15px 0px 15px 0px;
-        padding: 5px 0px 5px 0px;
         width: 90px;
     }
     

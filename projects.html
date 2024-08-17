@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Personal Website</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" 
+              media="screen and (max-width: 1000px) and (min-width: 641px)"
+              href="small-style.css" />
+        <link rel="stylesheet"
+              media="screen and (max-width: 640px) and (min-width: 476px)"
+              href="tablet-style.css" />
+        <link rel="stylesheet"
+              media="screen and (max-width: 475px)"
+              href="mobile-style.css" />
+    </head>
+    <body>
+        <nav>
+            <div id="nav-logo">
+                Jaden Baptista
+            </div>
+            <div id="nav-buttons">
+                <a class="nav-link" href="index.html"><button class="nav-button">About</button></a>
+                <a class="nav-link" href="resume.html"><button class="nav-button">Resume</button></a>
+                <button class="unlinked-nav-button">Projects</button>
+                <a class="nav-link" href="blog.html"><button class="nav-button">Blog</button></a>
+                <button class="unlinked-nav-button"
+                        id="dark-mode-button"
+                        data-state="light"
+                        onclick="toggleDarkMode();">
+                    <img id="dark-mode-button-img" 
+                         src="weather-moon-full-svgrepo-com.svg" 
+                         alt="dark mode toggle"
+                         width="50px"
+                         height="30px">
+                </button>
+            </div>
+            <div id="nav-break"></div>
+        </nav>
+        <div id="aside-grid">
+            <div id="main-content">
+                Welcome to my projects!
+            </div>
+        </div>
+    </body>
+
+    <script src="script.js"></script>
+</html>

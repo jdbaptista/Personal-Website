@@ -22,12 +22,22 @@
         justify-content: center;
         align-content: center;
     }
+
+    a.nav-link {
+        margin: 15px 0px 15px 0px;
+    }
     
     button.nav-button {
         font-size: 12px;
-        margin: 5px 0px 5px 0px;
-        padding: 5px 0px 5px 0px;
-        text-align: center;
+        padding: 15px 0px 15px 0px;
+        margin: none;
+        width: 70px;
+    }
+    
+    /* A nav button that does not have an a.nav-link wrapper. */
+    button.unlinked-nav-button {
+        font-size: 12px;
+        margin: 15px 0px 15px 0px;
         width: 70px;
     }
     

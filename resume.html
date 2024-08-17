@@ -2,28 +2,36 @@
 <html lang="en">
     <head>
         <title>Personal Website</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="style.css" />
-        <script src="script.js"></script>
+        <link rel="stylesheet" 
+              media="screen and (max-width: 1000px) and (min-width: 641px)"
+              href="small-style.css" />
+        <link rel="stylesheet"
+              media="screen and (max-width: 640px) and (min-width: 476px)"
+              href="tablet-style.css" />
+        <link rel="stylesheet"
+              media="screen and (max-width: 475px)"
+              href="mobile-style.css" />
     </head>
-
     <body>
         <nav>
             <div id="nav-logo">
                 Jaden Baptista
             </div>
             <div id="nav-buttons">
-                <button class="nav-button" id="about-button">About</button>
-                <button class="nav-button" id="resume-button">Resume</button>
-                <button class="nav-button" id="projects-button">Projects</button>
-                <button class="nav-button" id="blog-button">Blog</button>
-                <button class="nav-button" 
+                <a class="nav-link" href="index.html"><button class="nav-button">About</button></a>
+                <button class="unlinked-nav-button">Resume</button>
+                <a class="nav-link" href="projects.html"><button class="nav-button">Projects</button></a>
+                <a class="nav-link" href="blog.html"><button class="nav-button">Blog</button></a>
+                <button class="unlinked-nav-button"
                         id="dark-mode-button"
                         data-state="light"
-                        onclick="toggleDarkMode(this);">
+                        onclick="toggleDarkMode();">
                     <img id="dark-mode-button-img" 
                          src="weather-moon-full-svgrepo-com.svg" 
                          alt="dark mode toggle"
-                         width="50px" 
+                         width="50px"
                          height="30px">
                 </button>
             </div>
@@ -31,19 +39,86 @@
         </nav>
         <div id="aside-grid">
             <div id="main-content">
-                RESUME
+                <section>
+                    Lorem ipsum odor amet, consectetuer adipiscing elit. Risus mus ullamcorper et torquent vulputate. Tempus metus purus montes iaculis euismod nostra. Ac dignissim mus; urna fames sed litora. Tellus pharetra ridiculus viverra habitant luctus sociosqu himenaeos ornare. Aliquam ut mattis eleifend vivamus pulvinar pretium cursus. Ante himenaeos consectetur per quis accumsan fringilla mollis. Lacinia dapibus ex himenaeos nisi felis; velit nulla. Scelerisque auctor turpis id, volutpat hendrerit habitasse faucibus.
+                    <br/><br/>
+                    Tincidunt a nibh habitant tincidunt nec eros primis. Enim eu nostra netus penatibus tempor maecenas velit praesent. Ridiculus ut arcu laoreet iaculis leo molestie. Vehicula sodales elit mus metus efficitur praesent tristique. Feugiat libero iaculis fringilla rhoncus luctus maecenas tristique. Vehicula sollicitudin euismod justo dignissim malesuada libero.
+                    <br/><br/>
+                    Aliquet habitasse sollicitudin pellentesque; proin fusce velit facilisis. Placerat consectetur mollis viverra, porttitor quam consectetur lacus. Orci sagittis nascetur neque laoreet integer vitae lectus lacus. Ultrices fermentum egestas praesent vel pharetra ligula sodales purus ullamcorper. Mus ex dis mus laoreet pharetra ligula. Metus adipiscing gravida quis eu nam fringilla cras accumsan purus. Turpis tincidunt fermentum eu potenti quis eget nisi. Nascetur taciti quis leo nascetur laoreet parturient non ad justo. Dis habitasse est aenean maecenas senectus lobortis.
+                    <br/><br/>
+                    Luctus condimentum magnis fermentum egestas dapibus sed. Suspendisse leo nisi lectus vitae tempus amet vestibulum. Dolor felis viverra, iaculis tempus nec in venenatis. Ridiculus finibus scelerisque augue aptent phasellus id leo praesent lobortis. Rutrum quis torquent primis, tellus nibh in egestas. Hendrerit parturient mattis, mauris a nostra litora arcu. Senectus tortor pulvinar imperdiet molestie nullam. Sed maecenas vivamus odio placerat facilisis mi primis placerat pharetra.
+                    <br/><br/>
+                    Habitant ac cubilia placerat luctus adipiscing cras. Vestibulum lacus justo nam enim ipsum. Iaculis vehicula gravida cras nullam varius rhoncus platea proin. Auctor eu efficitur turpis gravida luctus. Non elit pellentesque etiam nunc ullamcorper sodales eu lobortis. Praesent tempus lacus habitant blandit faucibus diam tincidunt sed. Nisl platea eros non tempus in amet. Ad quis pellentesque torquent eleifend non.
+                </section>
+                <section>
+                    Lorem ipsum odor amet, consectetuer adipiscing elit. Risus mus ullamcorper et torquent vulputate. Tempus metus purus montes iaculis euismod nostra. Ac dignissim mus; urna fames sed litora. Tellus pharetra ridiculus viverra habitant luctus sociosqu himenaeos ornare. Aliquam ut mattis eleifend vivamus pulvinar pretium cursus. Ante himenaeos consectetur per quis accumsan fringilla mollis. Lacinia dapibus ex himenaeos nisi felis; velit nulla. Scelerisque auctor turpis id, volutpat hendrerit habitasse faucibus.
+                    <br/><br/>
+                    Tincidunt a nibh habitant tincidunt nec eros primis. Enim eu nostra netus penatibus tempor maecenas velit praesent. Ridiculus ut arcu laoreet iaculis leo molestie. Vehicula sodales elit mus metus efficitur praesent tristique. Feugiat libero iaculis fringilla rhoncus luctus maecenas tristique. Vehicula sollicitudin euismod justo dignissim malesuada libero.
+                    <br/><br/>
+                    Aliquet habitasse sollicitudin pellentesque; proin fusce velit facilisis. Placerat consectetur mollis viverra, porttitor quam consectetur lacus. Orci sagittis nascetur neque laoreet integer vitae lectus lacus. Ultrices fermentum egestas praesent vel pharetra ligula sodales purus ullamcorper. Mus ex dis mus laoreet pharetra ligula. Metus adipiscing gravida quis eu nam fringilla cras accumsan purus. Turpis tincidunt fermentum eu potenti quis eget nisi. Nascetur taciti quis leo nascetur laoreet parturient non ad justo. Dis habitasse est aenean maecenas senectus lobortis.
+                    <br/><br/>
+                    Luctus condimentum magnis fermentum egestas dapibus sed. Suspendisse leo nisi lectus vitae tempus amet vestibulum. Dolor felis viverra, iaculis tempus nec in venenatis. Ridiculus finibus scelerisque augue aptent phasellus id leo praesent lobortis. Rutrum quis torquent primis, tellus nibh in egestas. Hendrerit parturient mattis, mauris a nostra litora arcu. Senectus tortor pulvinar imperdiet molestie nullam. Sed maecenas vivamus odio placerat facilisis mi primis placerat pharetra.
+                    <br/><br/>
+                    Habitant ac cubilia placerat luctus adipiscing cras. Vestibulum lacus justo nam enim ipsum. Iaculis vehicula gravida cras nullam varius rhoncus platea proin. Auctor eu efficitur turpis gravida luctus. Non elit pellentesque etiam nunc ullamcorper sodales eu lobortis. Praesent tempus lacus habitant blandit faucibus diam tincidunt sed. Nisl platea eros non tempus in amet. Ad quis pellentesque torquent eleifend non.
+                </section>
+                <section>
+                    Lorem ipsum odor amet, consectetuer adipiscing elit. Risus mus ullamcorper et torquent vulputate. Tempus metus purus montes iaculis euismod nostra. Ac dignissim mus; urna fames sed litora. Tellus pharetra ridiculus viverra habitant luctus sociosqu himenaeos ornare. Aliquam ut mattis eleifend vivamus pulvinar pretium cursus. Ante himenaeos consectetur per quis accumsan fringilla mollis. Lacinia dapibus ex himenaeos nisi felis; velit nulla. Scelerisque auctor turpis id, volutpat hendrerit habitasse faucibus.
+                    <br/><br/>
+                    Tincidunt a nibh habitant tincidunt nec eros primis. Enim eu nostra netus penatibus tempor maecenas velit praesent. Ridiculus ut arcu laoreet iaculis leo molestie. Vehicula sodales elit mus metus efficitur praesent tristique. Feugiat libero iaculis fringilla rhoncus luctus maecenas tristique. Vehicula sollicitudin euismod justo dignissim malesuada libero.
+                    <br/><br/>
+                    Aliquet habitasse sollicitudin pellentesque; proin fusce velit facilisis. Placerat consectetur mollis viverra, porttitor quam consectetur lacus. Orci sagittis nascetur neque laoreet integer vitae lectus lacus. Ultrices fermentum egestas praesent vel pharetra ligula sodales purus ullamcorper. Mus ex dis mus laoreet pharetra ligula. Metus adipiscing gravida quis eu nam fringilla cras accumsan purus. Turpis tincidunt fermentum eu potenti quis eget nisi. Nascetur taciti quis leo nascetur laoreet parturient non ad justo. Dis habitasse est aenean maecenas senectus lobortis.
+                    <br/><br/>
+                    Luctus condimentum magnis fermentum egestas dapibus sed. Suspendisse leo nisi lectus vitae tempus amet vestibulum. Dolor felis viverra, iaculis tempus nec in venenatis. Ridiculus finibus scelerisque augue aptent phasellus id leo praesent lobortis. Rutrum quis torquent primis, tellus nibh in egestas. Hendrerit parturient mattis, mauris a nostra litora arcu. Senectus tortor pulvinar imperdiet molestie nullam. Sed maecenas vivamus odio placerat facilisis mi primis placerat pharetra.
+                    <br/><br/>
+                    Habitant ac cubilia placerat luctus adipiscing cras. Vestibulum lacus justo nam enim ipsum. Iaculis vehicula gravida cras nullam varius rhoncus platea proin. Auctor eu efficitur turpis gravida luctus. Non elit pellentesque etiam nunc ullamcorper sodales eu lobortis. Praesent tempus lacus habitant blandit faucibus diam tincidunt sed. Nisl platea eros non tempus in amet. Ad quis pellentesque torquent eleifend non.
+                </section>
+                <section>
+                    Lorem ipsum odor amet, consectetuer adipiscing elit. Risus mus ullamcorper et torquent vulputate. Tempus metus purus montes iaculis euismod nostra. Ac dignissim mus; urna fames sed litora. Tellus pharetra ridiculus viverra habitant luctus sociosqu himenaeos ornare. Aliquam ut mattis eleifend vivamus pulvinar pretium cursus. Ante himenaeos consectetur per quis accumsan fringilla mollis. Lacinia dapibus ex himenaeos nisi felis; velit nulla. Scelerisque auctor turpis id, volutpat hendrerit habitasse faucibus.
+                    <br/><br/>
+                    Tincidunt a nibh habitant tincidunt nec eros primis. Enim eu nostra netus penatibus tempor maecenas velit praesent. Ridiculus ut arcu laoreet iaculis leo molestie. Vehicula sodales elit mus metus efficitur praesent tristique. Feugiat libero iaculis fringilla rhoncus luctus maecenas tristique. Vehicula sollicitudin euismod justo dignissim malesuada libero.
+                    <br/><br/>
+                    Aliquet habitasse sollicitudin pellentesque; proin fusce velit facilisis. Placerat consectetur mollis viverra, porttitor quam consectetur lacus. Orci sagittis nascetur neque laoreet integer vitae lectus lacus. Ultrices fermentum egestas praesent vel pharetra ligula sodales purus ullamcorper. Mus ex dis mus laoreet pharetra ligula. Metus adipiscing gravida quis eu nam fringilla cras accumsan purus. Turpis tincidunt fermentum eu potenti quis eget nisi. Nascetur taciti quis leo nascetur laoreet parturient non ad justo. Dis habitasse est aenean maecenas senectus lobortis.
+                    <br/><br/>
+                    Luctus condimentum magnis fermentum egestas dapibus sed. Suspendisse leo nisi lectus vitae tempus amet vestibulum. Dolor felis viverra, iaculis tempus nec in venenatis. Ridiculus finibus scelerisque augue aptent phasellus id leo praesent lobortis. Rutrum quis torquent primis, tellus nibh in egestas. Hendrerit parturient mattis, mauris a nostra litora arcu. Senectus tortor pulvinar imperdiet molestie nullam. Sed maecenas vivamus odio placerat facilisis mi primis placerat pharetra.
+                    <br/><br/>
+                    Habitant ac cubilia placerat luctus adipiscing cras. Vestibulum lacus justo nam enim ipsum. Iaculis vehicula gravida cras nullam varius rhoncus platea proin. Auctor eu efficitur turpis gravida luctus. Non elit pellentesque etiam nunc ullamcorper sodales eu lobortis. Praesent tempus lacus habitant blandit faucibus diam tincidunt sed. Nisl platea eros non tempus in amet. Ad quis pellentesque torquent eleifend non.
+                </section>
+                <section>
+                    Lorem ipsum odor amet, consectetuer adipiscing elit. Risus mus ullamcorper et torquent vulputate. Tempus metus purus montes iaculis euismod nostra. Ac dignissim mus; urna fames sed litora. Tellus pharetra ridiculus viverra habitant luctus sociosqu himenaeos ornare. Aliquam ut mattis eleifend vivamus pulvinar pretium cursus. Ante himenaeos consectetur per quis accumsan fringilla mollis. Lacinia dapibus ex himenaeos nisi felis; velit nulla. Scelerisque auctor turpis id, volutpat hendrerit habitasse faucibus.
+                    <br/><br/>
+                    Tincidunt a nibh habitant tincidunt nec eros primis. Enim eu nostra netus penatibus tempor maecenas velit praesent. Ridiculus ut arcu laoreet iaculis leo molestie. Vehicula sodales elit mus metus efficitur praesent tristique. Feugiat libero iaculis fringilla rhoncus luctus maecenas tristique. Vehicula sollicitudin euismod justo dignissim malesuada libero.
+                    <br/><br/>
+                    Aliquet habitasse sollicitudin pellentesque; proin fusce velit facilisis. Placerat consectetur mollis viverra, porttitor quam consectetur lacus. Orci sagittis nascetur neque laoreet integer vitae lectus lacus. Ultrices fermentum egestas praesent vel pharetra ligula sodales purus ullamcorper. Mus ex dis mus laoreet pharetra ligula. Metus adipiscing gravida quis eu nam fringilla cras accumsan purus. Turpis tincidunt fermentum eu potenti quis eget nisi. Nascetur taciti quis leo nascetur laoreet parturient non ad justo. Dis habitasse est aenean maecenas senectus lobortis.
+                    <br/><br/>
+                    Luctus condimentum magnis fermentum egestas dapibus sed. Suspendisse leo nisi lectus vitae tempus amet vestibulum. Dolor felis viverra, iaculis tempus nec in venenatis. Ridiculus finibus scelerisque augue aptent phasellus id leo praesent lobortis. Rutrum quis torquent primis, tellus nibh in egestas. Hendrerit parturient mattis, mauris a nostra litora arcu. Senectus tortor pulvinar imperdiet molestie nullam. Sed maecenas vivamus odio placerat facilisis mi primis placerat pharetra.
+                    <br/><br/>
+                    Habitant ac cubilia placerat luctus adipiscing cras. Vestibulum lacus justo nam enim ipsum. Iaculis vehicula gravida cras nullam varius rhoncus platea proin. Auctor eu efficitur turpis gravida luctus. Non elit pellentesque etiam nunc ullamcorper sodales eu lobortis. Praesent tempus lacus habitant blandit faucibus diam tincidunt sed. Nisl platea eros non tempus in amet. Ad quis pellentesque torquent eleifend non.
+                </section>
+                <section>
+                    Lorem ipsum odor amet, consectetuer adipiscing elit. Risus mus ullamcorper et torquent vulputate. Tempus metus purus montes iaculis euismod nostra. Ac dignissim mus; urna fames sed litora. Tellus pharetra ridiculus viverra habitant luctus sociosqu himenaeos ornare. Aliquam ut mattis eleifend vivamus pulvinar pretium cursus. Ante himenaeos consectetur per quis accumsan fringilla mollis. Lacinia dapibus ex himenaeos nisi felis; velit nulla. Scelerisque auctor turpis id, volutpat hendrerit habitasse faucibus.
+                    <br/><br/>
+                    Tincidunt a nibh habitant tincidunt nec eros primis. Enim eu nostra netus penatibus tempor maecenas velit praesent. Ridiculus ut arcu laoreet iaculis leo molestie. Vehicula sodales elit mus metus efficitur praesent tristique. Feugiat libero iaculis fringilla rhoncus luctus maecenas tristique. Vehicula sollicitudin euismod justo dignissim malesuada libero.
+                    <br/><br/>
+                    Aliquet habitasse sollicitudin pellentesque; proin fusce velit facilisis. Placerat consectetur mollis viverra, porttitor quam consectetur lacus. Orci sagittis nascetur neque laoreet integer vitae lectus lacus. Ultrices fermentum egestas praesent vel pharetra ligula sodales purus ullamcorper. Mus ex dis mus laoreet pharetra ligula. Metus adipiscing gravida quis eu nam fringilla cras accumsan purus. Turpis tincidunt fermentum eu potenti quis eget nisi. Nascetur taciti quis leo nascetur laoreet parturient non ad justo. Dis habitasse est aenean maecenas senectus lobortis.
+                    <br/><br/>
+                    Luctus condimentum magnis fermentum egestas dapibus sed. Suspendisse leo nisi lectus vitae tempus amet vestibulum. Dolor felis viverra, iaculis tempus nec in venenatis. Ridiculus finibus scelerisque augue aptent phasellus id leo praesent lobortis. Rutrum quis torquent primis, tellus nibh in egestas. Hendrerit parturient mattis, mauris a nostra litora arcu. Senectus tortor pulvinar imperdiet molestie nullam. Sed maecenas vivamus odio placerat facilisis mi primis placerat pharetra.
+                    <br/><br/>
+                    Habitant ac cubilia placerat luctus adipiscing cras. Vestibulum lacus justo nam enim ipsum. Iaculis vehicula gravida cras nullam varius rhoncus platea proin. Auctor eu efficitur turpis gravida luctus. Non elit pellentesque etiam nunc ullamcorper sodales eu lobortis. Praesent tempus lacus habitant blandit faucibus diam tincidunt sed. Nisl platea eros non tempus in amet. Ad quis pellentesque torquent eleifend non.
+                </section>
+                <section>
+                    Lorem ipsum odor amet, consectetuer adipiscing elit. Risus mus ullamcorper et torquent vulputate. Tempus metus purus montes iaculis euismod nostra. Ac dignissim mus; urna fames sed litora. Tellus pharetra ridiculus viverra habitant luctus sociosqu himenaeos ornare. Aliquam ut mattis eleifend vivamus pulvinar pretium cursus. Ante himenaeos consectetur per quis accumsan fringilla mollis. Lacinia dapibus ex himenaeos nisi felis; velit nulla. Scelerisque auctor turpis id, volutpat hendrerit habitasse faucibus.
+                    <br/><br/>
+                    Tincidunt a nibh habitant tincidunt nec eros primis. Enim eu nostra netus penatibus tempor maecenas velit praesent. Ridiculus ut arcu laoreet iaculis leo molestie. Vehicula sodales elit mus metus efficitur praesent tristique. Feugiat libero iaculis fringilla rhoncus luctus maecenas tristique. Vehicula sollicitudin euismod justo dignissim malesuada libero.
+                    <br/><br/>
+                    Aliquet habitasse sollicitudin pellentesque; proin fusce velit facilisis. Placerat consectetur mollis viverra, porttitor quam consectetur lacus. Orci sagittis nascetur neque laoreet integer vitae lectus lacus. Ultrices fermentum egestas praesent vel pharetra ligula sodales purus ullamcorper. Mus ex dis mus laoreet pharetra ligula. Metus adipiscing gravida quis eu nam fringilla cras accumsan purus. Turpis tincidunt fermentum eu potenti quis eget nisi. Nascetur taciti quis leo nascetur laoreet parturient non ad justo. Dis habitasse est aenean maecenas senectus lobortis.
+                    <br/><br/>
+                    Luctus condimentum magnis fermentum egestas dapibus sed. Suspendisse leo nisi lectus vitae tempus amet vestibulum. Dolor felis viverra, iaculis tempus nec in venenatis. Ridiculus finibus scelerisque augue aptent phasellus id leo praesent lobortis. Rutrum quis torquent primis, tellus nibh in egestas. Hendrerit parturient mattis, mauris a nostra litora arcu. Senectus tortor pulvinar imperdiet molestie nullam. Sed maecenas vivamus odio placerat facilisis mi primis placerat pharetra.
+                    <br/><br/>
+                    Habitant ac cubilia placerat luctus adipiscing cras. Vestibulum lacus justo nam enim ipsum. Iaculis vehicula gravida cras nullam varius rhoncus platea proin. Auctor eu efficitur turpis gravida luctus. Non elit pellentesque etiam nunc ullamcorper sodales eu lobortis. Praesent tempus lacus habitant blandit faucibus diam tincidunt sed. Nisl platea eros non tempus in amet. Ad quis pellentesque torquent eleifend non.
+                </section>
             </div>
-            <aside>
-                Lorem ipsum odor amet, consectetuer adipiscing elit. Risus mus ullamcorper et torquent vulputate. Tempus metus purus montes iaculis euismod nostra. Ac dignissim mus; urna fames sed litora. Tellus pharetra ridiculus viverra habitant luctus sociosqu himenaeos ornare. Aliquam ut mattis eleifend vivamus pulvinar pretium cursus. Ante himenaeos consectetur per quis accumsan fringilla mollis. Lacinia dapibus ex himenaeos nisi felis; velit nulla. Scelerisque auctor turpis id, volutpat hendrerit habitasse faucibus.
-                <br/><br/>
-                Tincidunt a nibh habitant tincidunt nec eros primis. Enim eu nostra netus penatibus tempor maecenas velit praesent. Ridiculus ut arcu laoreet iaculis leo molestie. Vehicula sodales elit mus metus efficitur praesent tristique. Feugiat libero iaculis fringilla rhoncus luctus maecenas tristique. Vehicula sollicitudin euismod justo dignissim malesuada libero.
-                <br/><br/>
-                Aliquet habitasse sollicitudin pellentesque; proin fusce velit facilisis. Placerat consectetur mollis viverra, porttitor quam consectetur lacus. Orci sagittis nascetur neque laoreet integer vitae lectus lacus. Ultrices fermentum egestas praesent vel pharetra ligula sodales purus ullamcorper. Mus ex dis mus laoreet pharetra ligula. Metus adipiscing gravida quis eu nam fringilla cras accumsan purus. Turpis tincidunt fermentum eu potenti quis eget nisi. Nascetur taciti quis leo nascetur laoreet parturient non ad justo. Dis habitasse est aenean maecenas senectus lobortis.
-                <br/><br/>
-                Luctus condimentum magnis fermentum egestas dapibus sed. Suspendisse leo nisi lectus vitae tempus amet vestibulum. Dolor felis viverra, iaculis tempus nec in venenatis. Ridiculus finibus scelerisque augue aptent phasellus id leo praesent lobortis. Rutrum quis torquent primis, tellus nibh in egestas. Hendrerit parturient mattis, mauris a nostra litora arcu. Senectus tortor pulvinar imperdiet molestie nullam. Sed maecenas vivamus odio placerat facilisis mi primis placerat pharetra.
-                <br/><br/>
-                Habitant ac cubilia placerat luctus adipiscing cras. Vestibulum lacus justo nam enim ipsum. Iaculis vehicula gravida cras nullam varius rhoncus platea proin. Auctor eu efficitur turpis gravida luctus. Non elit pellentesque etiam nunc ullamcorper sodales eu lobortis. Praesent tempus lacus habitant blandit faucibus diam tincidunt sed. Nisl platea eros non tempus in amet. Ad quis pellentesque torquent eleifend non. 
-            </aside>
         </div>
     </body>
+
+    <script src="script.js"></script>
 </html>

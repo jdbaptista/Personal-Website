@@ -7,6 +7,10 @@
     --font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+:root.dark {
+    --background-color: #000000;
+}
+
 
 html {
     background-color: var(--background-color);
@@ -45,7 +49,34 @@ nav {
     justify-content: flex-end;
 }
 
+a.nav-link {
+    display: flex;
+    margin: 15px;
+    justify-content: center;
+    text-decoration: none;
+    padding: none;
+    width: max-content;
+    height: max-content;
+    justify-self: center;
+    align-self: center;
+}
+
 button.nav-button {
+    background-color: var(--background-color);
+    font-size: 15px;
+    font-family: var(--font-family);
+    font-weight: 600;
+    text-align: center;
+    color: var(--text-color);
+    padding: 15px;
+    width: 100px;
+    border: none;
+    outline: none;
+    border-radius: 0.7em;
+}
+
+/* A nav button that does not have an a.nav-link wrapper. */
+button.unlinked-nav-button {
     background-color: var(--background-color);
     font-size: 15px;
     font-family: var(--font-family);
@@ -64,7 +95,8 @@ button.nav-button {
     width: 70px;
 }
 
-button.nav-button:hover {
+button.nav-button:hover,
+button.unlinked-nav-button:hover {
     background-color: var(--accent-color);
     color: var(--text-color);
 }

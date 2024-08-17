@@ -1,4 +1,13 @@
-var savedColorScheme = {
+const lightColorScheme = {
+    backgroundColor: "#ffffff",
+    mainColor: "#4A7856",
+    boldColor: "#074B35",
+    accentColor: "#D8CF6F",
+    textColor: "#000000",
+    buttonImgSrc: "weather-moon-full-svgrepo-com.svg"
+}
+
+const darkColorScheme = {
     backgroundColor: "#252526",
     mainColor: "#4A7856",
     boldColor: "#074B35",
@@ -7,33 +16,35 @@ var savedColorScheme = {
     buttonImgSrc: "weather-moon-svgrepo-com.svg"
 }
 
-function toggleDarkMode(caller) {
+function useColorScheme(scheme) {
     var root = document.querySelector(':root');
-    var rs = getComputedStyle(root);
+    root.style.setProperty('--background-color', scheme.backgroundColor);
+    root.style.setProperty('--main-color', scheme.mainColor);
+    root.style.setProperty('--bold-color', scheme.boldColor);
+    root.style.setProperty('--accent-color', scheme.accentColor);
+    root.style.setProperty('--text-color', scheme.textColor);
     var buttonImg = document.querySelector('#dark-mode-button-img');
-    // retrieve current color scheme
-    var tempColorScheme = {
-        backgroundColor: rs.getPropertyValue('--background-color'),
-        mainColor: rs.getPropertyValue('--main-color'),
-        boldColor: rs.getPropertyValue('--bold-color'),
-        accentColor: rs.getPropertyValue('--accent-color'),
-        textColor: rs.getPropertyValue('--text-color'),
-        buttonImgSrc: buttonImg.src,
-    };
-    // switch to alternate color scheme
-    root.style.setProperty('--background-color', savedColorScheme.backgroundColor);
-    root.style.setProperty('--main-color', savedColorScheme.mainColor);
-    root.style.setProperty('--bold-color', savedColorScheme.boldColor);
-    root.style.setProperty('--accent-color', savedColorScheme.accentColor);
-    root.style.setProperty('--text-color', savedColorScheme.textColor);
-    buttonImg.src = savedColorScheme.buttonImgSrc;
-    // save previous color scheme
-    savedColorScheme.backgroundColor = tempColorScheme.backgroundColor;
-    savedColorScheme.mainColor = tempColorScheme.mainColor;
-    savedColorScheme.boldColor = tempColorScheme.boldColor;
-    savedColorScheme.accentColor = tempColorScheme.accentColor;
-    savedColorScheme.textColor = tempColorScheme.textColor;
-    savedColorScheme.buttonImgSrc = tempColorScheme.buttonImgSrc;
+    buttonImg.src = scheme.buttonImgSrc;
+}
+
+var currentTheme = localStorage.getItem("theme");
+// use correct theme on startup
+if (currentTheme == "dark") {
+    useColorScheme(darkColorScheme);
+} else {
+    useColorScheme(lightColorScheme);
+}
+
+function toggleDarkMode() {
+    if (currentTheme == "dark") {
+        localStorage.removeItem("theme");
+        currentTheme = "light";
+        useColorScheme(lightColorScheme);
+    } else {
+        currentTheme = "dark";
+        localStorage.setItem("theme", currentTheme);
+        useColorScheme(darkColorScheme);
+    }
 }
 
 function navbarTransitionEnd(ev) {

@@ -13,7 +13,6 @@
         <link rel="stylesheet"
               media="screen and (max-width: 475px)"
               href="mobile-style.css" />
-        <script src="script.js"></script>
     </head>
 
     <body>
@@ -22,18 +21,18 @@
                 Jaden Baptista
             </div>
             <div id="nav-buttons">
-                <button class="nav-button" id="about-button">About</button>
-                <button class="nav-button" id="resume-button">Resume</button>
-                <button class="nav-button" id="projects-button">Projects</button>
-                <button class="nav-button" id="blog-button">Blog</button>
-                <button class="nav-button" 
+                <button class="unlinked-nav-button">About</button>
+                <a class="nav-link" href="resume.html"><button class="nav-button">Resume</button></a>
+                <a class="nav-link" href="projects.html"><button class="nav-button">Projects</button></a>
+                <a class="nav-link" href="blog.html"><button class="nav-button">Blog</button></a>
+                <button class="unlinked-nav-button"
                         id="dark-mode-button"
                         data-state="light"
-                        onclick="toggleDarkMode(this);">
+                        onclick="toggleDarkMode();">
                     <img id="dark-mode-button-img" 
                          src="weather-moon-full-svgrepo-com.svg" 
                          alt="dark mode toggle"
-                         width="50px" 
+                         width="50px"
                          height="30px">
                 </button>
             </div>
@@ -132,4 +131,6 @@
             </aside>
         </div>
     </body>
+
+    <script src="script.js"></script>
 </html>
