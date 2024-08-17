@@ -114,12 +114,15 @@ button.unlinked-nav-button:hover {
     grid-column: 1 / -1;
 }
 
+#nav-separator {
+    margin-bottom: 20px;
+}
+
 /* ASIDE */
 
 #aside-grid {
     display: grid;
     grid-template: 1fr / 5vw 70vw 5vw auto 5vw;
-    margin-top: 50px;
 }
 
 #aside-separator {
@@ -145,7 +148,7 @@ aside::-webkit-scrollbar {
 
 /* MAIN SECTIONS */
 
-#main-content {
+#about {
     grid-column-start: 2;
     justify-self: center;
     display: flex;

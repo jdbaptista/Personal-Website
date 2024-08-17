@@ -54,7 +54,7 @@
     
     /* MAIN SECTIONS */
     
-    #main-content {
+    #about {
         grid-column-start: 1;
         width: 80vw;
     }
