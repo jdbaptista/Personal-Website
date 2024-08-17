@@ -190,11 +190,7 @@ aside::-webkit-scrollbar {
 section {
     margin-top: 10px;
     margin-bottom: 10px; 
-    width: 99%;
-    height: 700px;
-    /* border-color: red;
-    border-width: 2px;
-    border-style: solid; */
+    width: 100%;
 }
 
 div.footer-space {

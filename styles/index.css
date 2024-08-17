@@ -2,7 +2,7 @@
 #introduction {
     display: grid;
     position: relative;
-    grid-template: 1fr 1fr / 1fr;
+    grid-template: 225px 1fr 1fr / 1fr;
 }
 
 #face-image {
@@ -22,15 +22,25 @@
 }
 
 #hello {
-    position: relative;
-    top: -50px;
     grid-column-start: 2;
     align-self: center;
 }
 
 #summary {
-    position: relative;
-    top: -50px;
     grid-row-start: 2;
+    margin-top: 30px;
+    margin-bottom: 30px;
     justify-self: center;
+    align-self: center;
+}
+
+#socials {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+a.social-link {
+    text-decoration: none;
+    margin: 0px 15px 0px 15px;
 }

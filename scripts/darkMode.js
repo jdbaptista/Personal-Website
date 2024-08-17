@@ -4,7 +4,8 @@ const lightColorScheme = {
     boldColor: "#074B35",
     accentColor: "#D8CF6F",
     textColor: "#000000",
-    buttonImgSrc: "content/weather-moon-full-svgrepo-com.svg"
+    buttonImgSrc: "content/weather-moon-full-svgrepo-com.svg",
+    githubImgSrc: "content/github-mark.svg",
 }
 
 const darkColorScheme = {
@@ -13,7 +14,8 @@ const darkColorScheme = {
     boldColor: "#074B35",
     accentColor: "#D8CF6F",
     textColor: "#ffffff",
-    buttonImgSrc: "content/weather-moon-svgrepo-com.svg"
+    buttonImgSrc: "content/weather-moon-svgrepo-com.svg",
+    githubImgSrc: "content/github-mark-white.svg",
 }
 
 function useColorScheme(scheme) {
@@ -25,6 +27,12 @@ function useColorScheme(scheme) {
     root.style.setProperty('--text-color', scheme.textColor);
     var buttonImg = document.querySelector('#dark-mode-button-img');
     buttonImg.src = scheme.buttonImgSrc;
+    var githubImgs = document.querySelectorAll('.github-img');
+    console.log(githubImgs);
+    githubImgs.forEach((img) => {
+        console.log(img);
+        img.src = scheme.githubImgSrc;
+    })
 }
 
 var currentTheme = localStorage.getItem("theme");
