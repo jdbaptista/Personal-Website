@@ -2,16 +2,16 @@
 #introduction {
     display: grid;
     position: relative;
-    grid-template: 225px 1fr 1fr / 1fr;
+    grid-template: 230px 1fr 1fr / 1fr;
 }
 
 #face-image {
     grid-column-start: 1;
     position: absolute;
-    top: -50px;
     height: 300px;
+    top: -35px;
     object-fit: scale-down;
-    clip-path: xywh(0px 50px 100% 75% round 15% 0);
+    clip-path: circle(43%);
 }
 
 #hello-container {
@@ -19,7 +19,6 @@
     grid-template: 1fr / 300px 1fr;
     grid-row-start: 1;
     justify-self: center;
-    height: min-content;
 }
 
 #hello {
