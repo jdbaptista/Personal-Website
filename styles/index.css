@@ -1,0 +1,36 @@
+
+#introduction {
+    display: grid;
+    position: relative;
+    grid-template: 1fr 1fr / 1fr;
+}
+
+#face-image {
+    grid-column-start: 1;
+    position: absolute;
+    top: -50px;
+    height: 300px;
+    object-fit: scale-down;
+    clip-path: xywh(0px 50px 100% 75% round 15% 0);
+}
+
+#hello-container {
+    display: grid;
+    grid-template: 1fr / 300px 1fr;
+    grid-row-start: 1;
+    justify-self: center;
+}
+
+#hello {
+    position: relative;
+    top: -50px;
+    grid-column-start: 2;
+    align-self: center;
+}
+
+#summary {
+    position: relative;
+    top: -50px;
+    grid-row-start: 2;
+    justify-self: center;
+}
