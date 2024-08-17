@@ -59,6 +59,38 @@
         width: 80vw;
     }
 
+    /* ABOUT */
+    #introduction {
+        display: grid;
+        position: relative;
+        grid-template: 325px 1fr 1fr / 1fr;
+    }
+
+    #hello-container {
+        display: grid;
+        grid-template: 1fr / 1fr;
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-column-end: -1;
+        width: 100%;
+        height: min-content;
+    }
+
+    #face-image {
+        top: 50px;
+        justify-self: center;
+    }
+
+    #hello {
+        grid-column-start: 1;
+        grid-column-end: -1;
+        align-self: start;
+    }
+
+    br.superficial {
+        display: none;
+    }
+
     /* RESUME */
     
     span.text-long {
