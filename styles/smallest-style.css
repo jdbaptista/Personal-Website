@@ -1,5 +1,5 @@
 /* md */
-@media screen and (max-width: 900px) and (min-width: 701px) {
+@media screen and (max-width: 920px) and (min-width: 749px) {
     NAVBAR
     #nav-logo {
         font-size: 25px;
@@ -58,5 +58,14 @@
         grid-column-start: 1;
         width: 80vw;
     }
+
+    /* RESUME */
     
+    span.text-long {
+        display: none;
+    }
+
+    span.text-short {
+        display: inline;
+    }
 }

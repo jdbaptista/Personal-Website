@@ -166,8 +166,20 @@ section {
     margin-top: 10px;
     margin-bottom: 10px;
     width: 99%;
-    height: 500px;
+    height: 700px;
     border-color: red;
     border-width: 2px;
     border-style: solid;
+}
+
+div.footer-space {
+    height: 500px;
+}
+
+span.text-short {
+    display: none;
+}
+
+span.text-tiny {
+    display: none;
 }
