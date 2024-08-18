@@ -56,12 +56,8 @@
         height: 3px;
     }
     
-    #aside-grid {
-        grid-template: 1fr / 1fr;
-    }
-    
-    #aside-separator {
-        display: none;
+    div.aside-grid {
+        grid-template: 1fr / 10vw auto 10vw;
     }
     
     aside {

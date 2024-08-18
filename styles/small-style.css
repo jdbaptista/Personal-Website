@@ -7,10 +7,6 @@
     }
 
     #about {
-        width: 70vw;
-    }
-
-    #about {
         position: static;
         margin: 0px auto 0px auto;
         display: flex;
@@ -24,7 +20,7 @@
         overflow-x: hidden;
     }
     
-    #main-content {
+    div.main-content {
         grid-column-start: 2;
         justify-self: center;
         display: flex;
