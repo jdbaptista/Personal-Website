@@ -1,14 +1,8 @@
 /* md */
-@media screen and (max-width: 1200px) and (min-width: 1101px) {
+@media screen and (max-width: 1200px) and (min-width: 901px) {
 
     aside {
-        right: 15px;
-        width: 150px;
-    }
-
-    #about {
         display: none;
-        width: 70vw;
     }
 
     #about {

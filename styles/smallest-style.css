@@ -1,5 +1,5 @@
 /* md */
-@media screen and (max-width: 1100px) and (min-width: 751px) {
+@media screen and (max-width: 900px) and (min-width: 751px) {
     NAVBAR
     #nav-logo {
         font-size: 25px;
