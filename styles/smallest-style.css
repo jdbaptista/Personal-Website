@@ -121,4 +121,8 @@
     span.text-short {
         display: inline;
     }
+
+    div.project-title {
+        font-size: 18px;
+    }
 }

@@ -1,5 +1,38 @@
-#projects {
-    color: var(--text-color);
-    margin: 0vw 10vw 0vw 10vw;
-    width: 80vw;
+
+section {
+    position: relative;
+    height: 500px;
+}
+
+div.project-title {
+    z-index: 5;
+    position: absolute;
+    color: white;
+    font-family: var(--font-family);
+    font-size: 25px;
+    width: max-content;
+    top: 15px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+img.project-image {
+    position: relative;
+    width: inherit;
+    object-fit: cover;
+}
+
+#msp-disassembler {
+    margin: none;
+    padding: none;
+}
+
+#msp-disassembler::before {
+    z-index: 1;
+    content: '';
+    display: block;
+    position: absolute;
+    width: inherit;
+    height: 500px;
+    background: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%);
 }

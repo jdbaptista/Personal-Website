@@ -204,9 +204,11 @@ section {
     margin-top: 10px;
     margin-bottom: 10px; 
     width: 100%;
-    border-color: red;
+    /* border-color: red;
     border-width: 2px;
-    border-style: solid;
+    border-style: solid; */
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 div.footer-space {
