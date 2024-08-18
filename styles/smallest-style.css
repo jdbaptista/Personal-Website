@@ -1,5 +1,5 @@
 /* md */
-@media screen and (max-width: 920px) and (min-width: 749px) {
+@media screen and (max-width: 1100px) and (min-width: 751px) {
     NAVBAR
     #nav-logo {
         font-size: 25px;
@@ -49,6 +49,34 @@
     
     aside {
         display: none;
+    }
+
+    #about {
+        position: static;
+        margin: 0px auto 0px auto;
+        display: flex;
+        flex-direction: column;
+        width: max-content;
+        align-items: flex-end;
+        background-color: var(--background-color);
+        font-family: var(--font-family);
+        color: var(--text-color);
+        font-size: 15px;
+        overflow-x: hidden;
+    }
+    
+    #main-content {
+        grid-column-start: 2;
+        justify-self: center;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-end;
+        background-color: var(--background-color);
+        font-family: var(--font-family);
+        color: var(--text-color);
+        font-size: 15px;
+        overflow-x: hidden;
     }
 
     
