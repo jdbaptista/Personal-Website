@@ -170,7 +170,7 @@ aside::-webkit-scrollbar {
 
 /* MAIN SECTIONS */
 
-#about {
+div.centered {
     position: static;
     padding: 15px;
     margin: 0px auto 0px auto;
