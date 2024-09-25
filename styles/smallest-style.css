@@ -63,7 +63,7 @@
     
     /* MAIN SECTIONS */
     
-    #about {
+    div.centered {
         grid-column-start: 1;
         width: 80vw;
     }

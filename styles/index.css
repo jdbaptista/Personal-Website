@@ -38,9 +38,11 @@
     display: flex;
     margin-top: 20px;
     justify-content: center;
+    height: min-content;
 }
 
 a.social-link {
     text-decoration: none;
     margin: 0px 15px 0px 15px;
+    height: min-content;
 }
