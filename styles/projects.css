@@ -23,10 +23,12 @@ img.project-image {
 }
 
 .project-wrapper {
+    place-self: center;
     margin: none;
     padding: none;
+    max-width: 1650px; 
     height: min-content;
-    max-height: 250px;
+    max-height: 350px;
     box-sizing: border-box;
     overflow: hidden;
 }
