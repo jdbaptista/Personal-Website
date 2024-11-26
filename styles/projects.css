@@ -22,17 +22,27 @@ img.project-image {
     object-fit: cover;
 }
 
-#msp-disassembler {
+.project-wrapper {
     margin: none;
     padding: none;
+    height: min-content;
+    max-height: 250px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-#msp-disassembler::before {
+.project {
+    margin: none;
+    padding: none;
+    height: max-content;
+}
+
+.project::before {
     z-index: 1;
     content: '';
     display: block;
     position: absolute;
     width: inherit;
-    height: 500px;
+    height: 80%;
     background: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%);
 }
