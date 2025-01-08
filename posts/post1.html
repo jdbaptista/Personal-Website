@@ -1,0 +1,223 @@
+<div id="post">
+    <div id="post-title">
+        Passing Task Parameters In FreeRTOS
+    </div>
+    <div id="post-body">
+        <div class="code-aside">
+            <div class="post-text">
+                New tasks are created in FreeRTOS through use of the function xTaskCreate, 
+                whose function prototype is shown <span class="text-aside">to the right</span><span class="text-center">below</span>.
+                xTaskCreate offers a lot of flexibility through the pvParameters argument,
+                which is a void* that is passed to the new task. This is commonly used to
+                connect the task to synchronization objects, such as when pvParameters points
+                to a queue and is implicitly a QueueHandle_t. While using the argument in this
+                way, the programmer can be reasonably confident it is not a dangling pointer
+                because queues are usually designed to be in-scope for the entirety of the task's
+                lifetime. If the task needs references to multiple synchronization objects,
+                it is not as easy to assume that the pointer is valid.
+            </div>
+            <br>
+            <pre><code class="language-c code-right">BaseType_t xTaskCreate( TaskFunction_t pvTaskCode,
+                        const char * const pcName,
+                        const configSTACK_DEPTH_TYPE uxStackDepth,
+                        void *pvParameters,
+                        UBaseType_t uxPriority,
+                        TaskHandle_t *pxCreatedTask
+                      );</code></pre>
+        </div>
+        <br>
+        <div class="post-text">
+            While working on a project that controls many LEDs via I2C commands to multiple LED matrix drivers,
+            I decided to break up processing into three tasks. The first task handles initialization of the
+            system before moving on to its day job: handling user button presses in a form of <a href="https://github.com/FreeRTOS/FreeRTOS-Kernel-Book/blob/main/ch07.md#73-deferred-interrupt-processing" target="_blank">
+            deferred interrupt processing</a>. It creates the other two tasks during initialization and provides
+            them with references to synchronization objects. The second task, which is called the worker task, receives
+            commands on a queue shared between it and the interrupt task. It potentially makes an HTTPS request or interacts 
+            with non-volatile storage, then sends commands on another queue to a final task whose sole purpose is to handle LED animations and I2C transactions.
+        </div>
+        <br>
+        <div class="post-text">
+            For this program, the worker task needs pvParameters to point to two queues, which requires packaging
+            them into a struct and passing a pointer to the struct instead of the individual queues. The code below shows how this
+            can be done quickly in a small program, but the technique used is prone to error if refactoring occurs.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">/**
+* @brief Stores references to objects necessary for the worker task.
+*/
+struct WorkerTaskResources {
+    QueueHandle_t dotQueue; /*!< A handle to a queue that holds struct WorkerCommand objects. This task 
+                                retrieves commands from this queue and performs work to fulfill them. */
+    QueueHandle_t I2CQueue; /*!< A handle to a queue that holds struct I2CCommand objects. This task issues commands to 
+                                this queue to be handled by the I2C gatekeeper, implemented by vI2CGatekeeperTask. */
+};
+
+typedef structWorkerResources workerResources;
+
+/**
+* @brief Implements the worker task.
+*/
+void vWorkerTask(void* pvParameters) {
+    WorkerTaskResources *resources = (WorkerTaskResources *) pvParameters;
+    QueueHandle_t dotQueue = resources->dotQueue;
+    QueueHandle_t I2CQueue = resources->I2CQueue;
+    ...
+}
+
+/**
+* @brief Initializes other tasks, then handles button presses for LED refreshes.
+*/
+void app_main(void)
+{
+    ...
+    WorkerTaskResources workerResources;
+    workerResources.dotQueue = xQueueCreate(DOTS_QUEUE_SIZE, sizeof(WorkerCommand));
+    workerResources.I2CQueue = xQueueCreate(I2C_QUEUE_SIZE, sizeof(I2CCommand));
+    xTaskCreate(vWorkerTask, 
+                "worker", 
+                DOT_WORKER_STACK, 
+                &workerResources, 
+                DOT_WORKER_PRIO, 
+                NULL);
+    ...
+}</code></pre>
+        <br>
+        <div class="post-text">
+        Consider what will happen if the creation of the worker task is abstracted under an initialization function. 
+        In that case, displayed below, the pointer given to the worker task will be invalid after the initialize function 
+        returns and workerResources goes out of scope. The issue is that workerResources is created on app_main's 
+        stack instead of in static memory or on the heap.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">/**
+* @brief Initializes system resources and tasks.
+*/
+void initialize(void)
+{
+    ...
+    WorkerTaskResources workerResources;
+    workerResources.dotQueue = xQueueCreate(DOTS_QUEUE_SIZE, sizeof(WorkerCommand));
+    workerResources.I2CQueue = xQueueCreate(I2C_QUEUE_SIZE, sizeof(I2CCommand));
+    xTaskCreate(vWorkerTask, 
+                "worker", 
+                DOT_WORKER_STACK, 
+                &workerResources, 
+                DOT_WORKER_PRIO, 
+                NULL);
+    ...
+}
+
+void app_main(void)
+{
+    ...
+    initialize();
+    ...
+}
+        </code></pre>
+        <br>
+        <div class="post-text">
+            Using stack memory will work only if the app_main task never gets deleted and
+            workerResources is defined only in the scope of the app_main function. Some
+            examples of alternative functions that create the worker task are presented
+            below. The first allocates resources in static memory, which is useful in
+            two scenarios: First, when there will be a single instance of this task at
+            any given time; Second, when there will be multiple task instances, but the
+            data contained in pvParameters will not be modified (or will be modified safely).
+        </div>
+        <br>
+        <pre><code class="language-c code-full">/**
+* @brief Initializes the worker task.
+*
+* @note Shallow copies of function parameters are made and placed
+*       in static memory for the worker task to use.
+*/
+void createWorkerTask(QueueHandle_t dotQueue, QueueHandle_t I2CQueue)
+{
+    static WorkerTaskResources workerResources;
+    workerResources.dotQueue = dotQueue;
+    workerResources.I2CQueue = I2CQueue;
+    xTaskCreate(vWorkerTask, 
+                "worker", 
+                DOT_WORKER_STACK, 
+                &workerResources, 
+                DOT_WORKER_PRIO, 
+                NULL);
+}
+
+void app_main(void)
+{
+    ...
+    QueueHandle_t dotQueue = xQueueCreate(DOTS_QUEUE_SIZE, sizeof(WorkerCommand));
+    QueueHandle_t I2CQueue = xQueueCreate(I2C_QUEUE_SIZE, sizeof(I2CCommand));
+    createWorkerTask(dotQueue, I2CQueue);
+    ...
+}</code></pre>
+        <br>
+        <div class="post-text">
+            Another design uses heap allocation instead of static memory, which can be
+            useful when the number of task instances isn't known at compile-time. If
+            the task instances will be deleted, it is important that they free the struct
+            allocated for them. In this design, the tasks have full ownership over their
+            parameter; They can modify the data, but must free the struct after use.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">void createWorkerTask(QueueHandle_t dotQueue, QueueHandle_t I2CQueue)
+{
+    WorkerTaskResources *workerResources = malloc(sizeof(WorkerTaskResources));
+    workerResources->dotQueue = dotQueue;
+    workerResources->I2CQueue = I2CQueue;
+    xTaskCreate(vWorkerTask, 
+                "worker", 
+                DOT_WORKER_STACK, 
+                workerResources, 
+                DOT_WORKER_PRIO,
+                NULL);
+}
+
+void vWorkerTask(void* pvParameters) {
+    WorkerTaskResources *resources = (WorkerTaskResources *) pvParameters;
+    ...
+    free(resources);
+}
+
+void app_main(void)
+{
+    ...
+    for (int i = 0; i < NUM_WORKERS; i++) {
+        createWorkerTask(dotQueue, I2CQueue);
+    }
+    ...
+}</code></pre>
+        <br>
+        <div class="post-text">
+            The final design gives full ownership of resources located in static memory,
+            as long as the number of task instances is known or capped at compile-time.
+            This may be preferrable to the previous design if use of dynamic memory is 
+            frowned upon in the project.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">void createWorkerTask(int instance, QueueHandle_t dotQueue, QueueHandle_t I2CQueue)
+{
+    static WorkerTaskResources workerResources[NUM_WORKERS];
+    workerResources[instance].dotQueue = dotQueue;
+    workerResources[instance].I2CQueue = I2CQueue;
+    xTaskCreate(vWorkerTask, 
+                "worker", 
+                DOT_WORKER_STACK, 
+                &workerResources[instance], 
+                DOT_WORKER_PRIO, NULL);
+}
+        </code></pre>
+        <br>
+        <div class="post-text">
+            Using these functions allows tasks to be created safely with proper
+            parameters from any function in the app_main task. It also means that
+            the createWorkerTask function can be placed near the vWorkerTask function
+            in the code base, which will make it less likely that future changes to 
+            parameters will result in unexpected memory errors. Happy coding!
+        </div>
+    </div>
+    <!-- footer -->   
+    <br>
+    <br>
+</div>

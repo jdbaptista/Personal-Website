@@ -6,6 +6,10 @@
         width: 200px;
     }
 
+    div.aside-content {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
     div.centered {
         position: static;
         margin: 0px auto 0px auto;

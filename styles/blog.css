@@ -2,3 +2,86 @@
     margin: 0px auto;
     text-align: center;
 }
+
+div.blog-centered {
+    position: static;
+    padding: 15px;
+    margin: 0px auto 0px auto;
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    align-items: flex-end;
+    background-color: var(--background-color);
+    font-family: var(--font-family);
+    color: var(--text-color);
+    font-size: 15px;
+    overflow-x: hidden;
+}
+
+#post-container {
+    display: flex;
+    min-height: 0;
+    width: 90vw;
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+a.post {
+    display: flex;
+    text-decoration: none;
+    flex-direction: column;
+    height: 400px;
+    width: 300px;
+    background-color: var(--shadow-color);
+    margin: 7px;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+a.post:hover {
+    background-color: var(--main-color);
+}
+
+div.post-title-container {
+    height: 100px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    overflow-y: hidden;
+}
+
+div.post-title {
+    height: min-content;
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-size: 25px;
+    text-wrap: balance;
+    text-align: center;
+    overflow-y: hidden;
+    vertical-align: center;
+}
+
+div.post-desc {
+    margin-top: 15px;
+    text-align: center;
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-size: 20px;
+    flex-grow: 1;
+}
+
+div.post-date {
+    height: min-content;
+    margin-top: 25px;
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-size: 25px;
+    text-wrap: balance;
+    text-align: center;
+    vertical-align: middle;
+}

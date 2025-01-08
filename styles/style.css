@@ -1,5 +1,6 @@
 :root {
     --background-color: #ffffff;
+    --shadow-color: #ced9d1;
     --main-color: #4A7856;
     --bold-color: #074B35;
     --accent-color: #D8CF6F;
@@ -62,6 +63,10 @@ a.nav-link {
     align-self: center;
 }
 
+a.nav-link:hover {
+    cursor: pointer;
+}
+
 button.nav-button {
     background-color: var(--background-color);
     font-size: 15px;
@@ -74,6 +79,10 @@ button.nav-button {
     border: none;
     outline: none;
     border-radius: 0.7em;
+}
+
+button.nav-button:hover {
+    cursor: pointer;
 }
 
 /* A nav button that does not have an a.nav-link wrapper. */
@@ -89,6 +98,10 @@ button.unlinked-nav-button {
     border: none;
     outline: none;
     border-radius: 0.7em;
+}
+
+button.unlinked-nav-button:hover {
+    cursor: pointer;
 }
 
 #dark-mode-button {
@@ -162,7 +175,25 @@ div.aside-header {
 }
 
 div.aside-content {
+    
     margin: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+div.aside-title-container {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+a.aside-title {
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+    overflow-wrap: wrap;
 }
 
 aside::-webkit-scrollbar {
