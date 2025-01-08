@@ -25,7 +25,6 @@ async function fetchBlogTitles() {
             postDiv.classList.add("aside-title");
             postDiv.href = `/pages/post.html?p=${post.filename}`
             postDiv.innerHTML = post.title;
-            console.log(`text:${postDiv.text}:`);
             postTitleContainer.appendChild(postContainerDiv);
             postContainerDiv.appendChild(postDiv);
         }
