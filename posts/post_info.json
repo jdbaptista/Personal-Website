@@ -3,8 +3,8 @@
         "title": "Passing Task Parameters in FreeRTOS",
         "creation_year": 2025,
         "creation_month": 1,
-        "creation_day": 1,
+        "creation_day": 7,
         "filename": "post1",
-        "description": "Task creation can be dangerous, especially when a task is given a parameter that points to stack memory. This post explores design patterns that can make memory ownership between tasks explicit."
+        "description": "Task creation can be dangerous, especially when a task is given a parameter that points to stack memory. This post explores ways to safely pass parameters to a new task while maintaining clean and future-proof code."
     }
 ]}

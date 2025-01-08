@@ -52,7 +52,7 @@ struct WorkerTaskResources {
                                 this queue to be handled by the I2C gatekeeper, implemented by vI2CGatekeeperTask. */
 };
 
-typedef structWorkerResources workerResources;
+typedef struct WorkerResources WorkerResources;
 
 /**
 * @brief Implements the worker task.
@@ -122,7 +122,7 @@ void app_main(void)
             below. The first allocates resources in static memory, which is useful in
             two scenarios: First, when there will be a single instance of this task at
             any given time; Second, when there will be multiple task instances, but the
-            data contained in pvParameters will not be modified (or will be modified safely).
+            data contained in pvParameters will not be modified (or will intentionally be modified globally).
         </div>
         <br>
         <pre><code class="language-c code-full">/**
@@ -158,7 +158,7 @@ void app_main(void)
             useful when the number of task instances isn't known at compile-time. If
             the task instances will be deleted, it is important that they free the struct
             allocated for them. In this design, the tasks have full ownership over their
-            parameter; They can modify the data, but must free the struct after use.
+            parameter. That is, they can modify the data, but must free the struct after use.
         </div>
         <br>
         <pre><code class="language-c code-full">void createWorkerTask(QueueHandle_t dotQueue, QueueHandle_t I2CQueue)
@@ -190,10 +190,10 @@ void app_main(void)
 }</code></pre>
         <br>
         <div class="post-text">
-            The final design gives full ownership of resources located in static memory,
+            The final design gives new tasks full ownership of resources located in static memory,
             as long as the number of task instances is known or capped at compile-time.
             This may be preferrable to the previous design if use of dynamic memory is 
-            frowned upon in the project.
+            frowned upon in the project, which may be the case in safety-critical systems that must not reboot unexpectedly.
         </div>
         <br>
         <pre><code class="language-c code-full">void createWorkerTask(int instance, QueueHandle_t dotQueue, QueueHandle_t I2CQueue)
