@@ -117,32 +117,70 @@
                     Technologies: 
                     C/C++,
                     Python,
-                    RISC-V,
-                    x86,
                     FreeRTOS,
                     ESP-IDF,
-                    Kicad,
-                    GDB,
-                    CMake,
-                    GCC.
+                    Assembly.
                 </div>
                 <br/>
                 <div class="resume-item-static">
                     Hardware: 
-                    MSP430,
-                    ESP32,
+                    DC/AC Circuit Analysis,
+                    Oscilloscopes,
                     UART,
                     I2C,
                     SPI,
                     JTAG,
-                    Oscilloscopes,
-                    DC/AC Circuit Analysis.
+                    MSP430,
+                    ESP32.
                 </div>
             </section>
             <section class="resume-container">
                 <div class="resume-header">
                     Experience
                 </div>
+                <div class="resume-item">
+                    <div class="resume-item-left">
+                        Outside Open
+                    </div>
+                    <div class="resume-item-right">
+                        Dec 2024 — Present
+                    </div>
+                </div>
+                <div class="resume-item">
+                    Part-Time Junior Developer
+                </div>
+                <div class="resume-item">
+                    <ul class="resume-list">
+                        <li>
+                            Creating a wall-mounted, decorative <a href="https://github.com/zinkwazi/traffic-pcb-sb" target="_blank">device</a> that displays
+                            real-time traffic conditions in the greater Los Angeles
+                            area using over 400 SMD LEDs on an exposed PCB.
+                        </li>
+                        <li>
+                            Leading firmware development for an ESP32 using Espressif's SDK, ESP-IDF.
+                        </li>
+                        <li>
+                            Revising hardware using Kicad and exporting gerber files and BOMs for production.
+                        </li>
+                        <li>
+                            Writing a HAL to synchronize and abstract I2C interaction to four LED matrix drivers.
+                        </li>
+                        <li>
+                            Utilizing FreeRTOS tasks through the use of synchronization primitives such as mutexes.
+                        </li>
+                        <li>
+                            Managing OTA updates and supporting multiple firmware and hardware versions.
+                        </li>
+                        <li>
+                            Developing manual and unit tests to verify correct hardware and firmware behavior.
+                        </li>
+                        <li>
+                            Implementing data structures such as a circular buffer,
+                            which removed the need for dynamic memory allocation when parsing HTTPS responses.
+                        </li>
+                    </ul>
+                </div>
+                <br/>
                 <div class="resume-item">
                     <div class="resume-item-left">
                         University of California, Berkeley
@@ -247,50 +285,6 @@
                 <div class="resume-header">
                     Projects
                 </div>
-                <div class="resume-item">
-                    <div class="resume-item-left">
-                        <a href="https://github.com/zinkwazi/traffic-pcb-sb" target="_blank">
-                            Live Traffic PCB
-                        </a>
-                    </div>
-                    <div class="resume-item-right">
-                        Aug 2024 - Present
-                    </div>
-                </div>
-                <div class="resume-item">
-                    <div class="resume-item-left"></div>
-                    <div class="resume-item-right">
-                        Collaborative Project
-                    </div>
-                </div>
-                <div class="resume-item">
-                    <ul class="resume-list">
-                        <li>
-                            Led firmware development for an ESP32 and assisted with circuit 
-                            design on a PCB that displays real-time traffic conditions of
-                            nearly 650 road segments in the greater Los Angeles area.
-                        </li>
-                        <li>
-                            Successfully utilized ESP-IDF documentation to implement 
-                            OTA updates, establish HTTPS connections to 
-                            <a href="https://developer.tomtom.com/">TomTom</a>'s traffic API,
-                            and enable non-volatile storage of user data.
-                        </li>
-                        <li>
-                            Managed various FreeRTOS tasks by configuring task priorities and using semaphores, 
-                            task notifications, queues, and event groups to synchronize resource usage and error states.
-                        </li>
-                        <li>
-                            Handled memory constraints by optimizing task stack usage and developing an efficient
-                            data structure to hold LED to road segment mappings.
-                        </li>
-                        <li>
-                            Synchronized I2C commands to three LED matrix drivers through
-                            the use of a gatekeeper task, controlling a total of 326 RGB LEDs.
-                        </li>
-                    </ul>
-                </div>
-                <br/>
                 <div class="resume-item">
                     <div class="resume-item-left">
                         <a href="https://github.com/jdbaptista/MSP-Debugger" target="_blank">
