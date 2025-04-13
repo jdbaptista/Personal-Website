@@ -1,10 +1,18 @@
 {"posts": [
     {
+        "title": "Informative Error Handling in C",
+        "creation_year": 2025,
+        "creation_month": 4,
+        "creation_day": 12,
+        "filename": "post2",
+        "description": "Determining the source of a failure can be tricky if error codes are immediately passed up the stack; An \"err: -1\" log entry is simply not helpful. This post explores error handling with debugging in mind."
+    },
+    {
         "title": "Passing Task Parameters in FreeRTOS",
         "creation_year": 2025,
         "creation_month": 1,
         "creation_day": 7,
         "filename": "post1",
         "description": "Task creation can be dangerous, especially when a task is given a parameter that points to stack memory. This post explores ways to safely pass parameters to a new task while maintaining clean and future-proof code."
-    }
+    } 
 ]}

@@ -182,7 +182,7 @@ div.aside-content {
 }
 
 div.aside-title-container {
-    height: 100px;
+    height: 50px;
     width: 100%;
     display: flex;
     flex-direction: column;
