@@ -1,1 +1,367 @@
-This is post 2.
+<div id="post">
+    <div id="post-title">
+        Informative Error Handling in C
+    </div>
+    <div id="post-body">
+        <div class="post-text">
+            "Move fast and break things" is a motto many programmers live by. Breaking
+            things is the inevitable byproduct of moving fast, however you are likely
+            to move slow in the long run if you plan on fixing the things that are broken.
+            Here is an example of when moving fast can go wrong.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">esp_err_t initLedMatrix(void)
+{
+    esp_err_t err;
+    /* check that component is not already initialized */
+    err = getLedMatrixStatus(); // if not ESP_OK, static vars are now NULL.
+    if (err == ESP_OK) return err;
+
+    /* initialize component */
+    err = matInitializeBus1(I2C1_PORT, SDA1_PIN, SCL1_PIN);
+    if (err != ESP_OK) return err;
+    err = matInitializeBus2(I2C2_PORT, SDA2_PIN, SCL2_PIN);
+    if (err != ESP_OK) return err;
+
+    /* confirm proper component initialization */
+    err = getLedMatrixStatus();
+    if (err != ESP_OK) return err;
+    return ESP_OK;
+}</code></pre>
+        <br>
+        <div class="post-text">
+            Suppose that there is a critical bug in matInitializeBus1, which is causing
+            a failure code to be returned. How quickly can the bug be identified and how 
+            quickly can the bug be fixed? In this case, the bug is in initialization code, 
+            so the overall system will likely crash before even starting. Although it can
+            be identified quickly, it will not be quick to fix. Suppose the calling code
+            looks like this:
+        </div>
+        <br>
+        <pre><code class="language-c code-full">...
+if (initLedMatrix() != ESP_OK) return ESP_FAIL;
+...
+        </code></pre>
+        <br>
+        <div class="post-text">
+            The error code that is logged at the top-level will be "err: -1". Brilliant.
+            It's easy enough to change the code to reveal the actual error, wait for a 
+            recompile and, if you're writing firmware for a microcontroller, wait for the binary to flash.
+            Now the code reads:
+        </div>
+        <br>
+        <pre><code class="language-c code-full">...
+esp_err_t err = initLedMatrix();
+if (err != ESP_OK) return err;
+...
+        </code></pre>
+        <br>
+        <div class="post-text">
+            The error code returned from initLedMatrix() is discovered to be "err: -1". 
+            It has been confirmed that one of the four calls in initLedMatrix is returning
+            ESP_FAIL. Enlightening. This is not likely to be informative, however if only
+            one of the four functions returns ESP_FAIL and it only returns ESP_FAIL in
+            a very particular failure case, then it truly is enlightening. Unfortunately,
+            that is not the case here. All four of the functions return ESP_FAIL if any
+            error occurs. I will give you a hint and say that there is an error inside matInitializeBus1, shown below.
+            Can you spot it?
+        </div>
+        <br>
+        <pre><code class="language-c code-full">...
+err = i2c_new_master_bus(&master_bus_config, &sI2CBus1);
+if (err != ESP_OK) return ESP_FAIL;
+err = i2c_master_bus_add_device(sI2CBus1, &matrix_config, &sMat1Handle);
+if (err != ESP_OK) return ESP_FAIL;
+err = i2c_master_bus_add_device(sI2CBus1, &matrix_config, &sMat1Handle);
+if (err != ESP_OK) return ESP_FAIL;
+...
+        </code></pre>
+        <br>
+        <div class="post-text">
+            The second i2c_master_bus_add_device should have an argument of &sMat2Handle
+            instead of &sMat1Handle. The bug has been found and the code should now work! Recompile,
+            flash, read logs: "err: -1". Time for a debugger, but the PCB was designed quickly
+            and doesn't expose JTAG pins, so it will either be a lot of inspection or some
+            work to get the debugger set up.
+        </div>
+        <br>
+        <div class="post-text">
+            The error in this example is very replicable, so this iterative process 
+            will eventually work and all the bugs will be fixed. However, when working with 
+            FreeRTOS tasks, some bugs may arise due to infrequent race conditions.
+            In these cases, it is important that what is logged is informative
+            the first time because it is unlikely the bug will occur again during development.
+            Ideally, the logs will show where the bug occurred and under what conditions.
+            Another aspect of error codes that needs to be considered is runtime recoverability,
+            which won't be discussed here.
+        </div>
+        <br>
+        <div class="code-aside">
+            <div class="post-text">
+                A quick way to log exactly where bugs occurred and some of the conditions
+                that led to failure is to log a stack trace whenever a bottom-level error occurs.
+                By bottom-level error, I mean an error using a library function that you
+                do not control, such as an I2C HAL function. To the right is an example
+                of a macro that logs the stack trace in ESP-IDF and returns the error code.
+            </div>
+            <br>
+            <pre><code class="language-c code-right">#include "esp_debug_helpers.h"
+
+/**
+ * @brief Returns mat_err after printing the backtrace. This should only be
+ * used when an error is being thrown, not being propogated through the stack.
+ */
+#define THROW_ERR(err)                             \ 
+    do {                                           \
+        ESP_LOGE(TAG, "err: %d", err);             \
+        esp_backtrace_print(MAT_ERROR_BACKTRACE);  \
+        return err;                                \
+    } while (0);</code></pre>
+        </div>
+        <br>
+        <div class="post-text">
+            Informatively logging application state is a difficult problem, which is one I will
+            not focus on much here. However, one of the issues that I've run into while
+            trying to keep accurate logs of what occurs in my programs is memory
+            constraints because keeping many strings in the program increases the
+            binary size. This has been a headache to deal with in a recent project
+            that already has a lot of information to store. In the case of my
+            project, much memory is consumed by led matrix register mappings and
+            Kicad PCB coordinates of the leds.
+        </div>
+        <br>
+        <div class="code-aside">
+            <div class="post-text">
+                Encoding application state into error codes can be a quick way around this
+            issue. Instead of returning ESP_FAIL everywhere, the programmer can be more
+            verbose by using many codes and documenting the conditions under which
+            an error will occur. For example, ESP-IDF already defines some codes, which
+            are shown <span class="text-aside">to the right</span><span class="text-center">below</span>.
+            </div>
+            <br>
+            <pre><code class="language-c code-right">#define ESP_ERR_NO_MEM              0x101   /* Out of memory */
+#define ESP_ERR_INVALID_ARG         0x102   /* Invalid argument */
+#define ESP_ERR_INVALID_STATE       0x103   /* Invalid state */
+#define ESP_ERR_INVALID_SIZE        0x104   /* Invalid size */
+#define ESP_ERR_NOT_FOUND           0x105   /* Requested resource not found */
+#define ESP_ERR_NOT_SUPPORTED       0x106   /* Operation or feature not supported */
+#define ESP_ERR_TIMEOUT             0x107   /* Operation timed out */
+#define ESP_ERR_INVALID_RESPONSE    0x108   /* Received response was invalid */
+#define ESP_ERR_INVALID_CRC         0x109   /* CRC or checksum was invalid */
+#define ESP_ERR_INVALID_VERSION     0x10A   /* Version was invalid */
+#define ESP_ERR_INVALID_MAC         0x10B   /* MAC address was invalid */
+#define ESP_ERR_NOT_FINISHED        0x10C   /* Operation has not fully completed */
+#define ESP_ERR_NOT_ALLOWED         0x10D   /* Operation is not allowed */</code></pre>
+        </div>
+        <br>
+        <div class="post-text">
+            There are two issues that arise from using a predefined set of error
+            codes in an application. First, the conditions of a particular error
+            may not cleanly fit into one of the provided codes. This is not a
+            major issue as long as the conditions under which a function returns
+            a particular code are well documented. The more worrying issue, which
+            was the main issue in the example, is error code collision. It may
+            be unreasonable to print a stack trace that is informative, in which
+            case error codes must not only encode the failure state, but also
+            encode the location where the error occurred.
+        </div>
+        <br>
+        <div class="post-text">
+            The initLedMatrix function was an example of this because there were
+            four separate failure locations and only one error code attempting
+            to encode all of them. Using the expanded set of codes
+            can be useful to specify the source of an error. The code below
+            gives each condition a unique failure code, however the code descriptions don't
+            fit the conditions very well.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">esp_err_t initLedMatrix(void)
+{
+    esp_err_t err;
+    /* check that component is not already initialized */
+    err = getLedMatrixStatus(); // if not ESP_OK, static vars are now NULL.
+    if (err == ESP_OK) return ESP_ERR_INVALID_STATE;
+
+    /* initialize component */
+    err = matInitializeBus1(I2C1_PORT, SDA1_PIN, SCL1_PIN);
+    if (err != ESP_OK) return ESP_ERR_INVALID_VERSION;
+    err = matInitializeBus2(I2C2_PORT, SDA2_PIN, SCL2_PIN);
+    if (err != ESP_OK) return ESP_ERR_INVALID_RESPONSE;
+
+    /* confirm proper component initialization */
+    err = getLedMatrixStatus();
+    if (err != ESP_OK) return ESP_FAIL;
+    return ESP_OK;
+}</code></pre>
+        <br>
+        <div class="post-text">
+            Note that the issue of disregarding error
+            codes from the functions is present in this implementation, meaning we can not determine
+            where in the failing function the error occurs. Suppose that matInitializeBus1
+            and matInitializeBus2 are both similar and return the same set of error
+            codes. To encode the error source within the failing function
+            while simultaneously encoding which of matInitializeBus1 or matInitializeBus2
+            fails, the returned codes must be aliased to another within initLedMatrix.
+        </div>
+
+
+        <br>
+        <pre><code class="language-c code-full">esp_err_t initLedMatrix(void)
+{
+    esp_err_t err;
+    /* check that component is not already initialized */
+    err = getLedMatrixStatus(); // if not ESP_OK, static vars are now NULL.
+    if (err == ESP_OK) return ESP_ERR_INVALID_STATE;
+
+    /* initialize component */
+    err = matInitializeBus1(I2C1_PORT, SDA1_PIN, SCL1_PIN);
+    if (err != ESP_OK)
+    {
+        if (err == ESP_ERR_INVALID_ARG) return ESP_ERR_INVALID_ARG;
+        if (err == ESP_ERR_INVALID_RESPONSE) return ESP_ERR_INVALID_RESPONSE;
+        if (err == ESP_ERR_NOT_FOUND) return ESP_ERR_NOT_FOUND;
+    }
+    err = matInitializeBus2(I2C2_PORT, SDA2_PIN, SCL2_PIN);
+    if (err != ESP_OK)
+    {
+        if (err == ESP_ERR_INVALID_ARG) return ESP_ERR_INVALID_SIZE;
+        if (err == ESP_ERR_INVALID_RESPONSE) return ESP_ERR_NOT_SUPPORTED;
+        if (err == ESP_ERR_NOT_FOUND) return ESP_ERR_TIMEOUT;
+    }
+
+    /* confirm proper component initialization */
+    err = getLedMatrixStatus();
+    if (err != ESP_OK) return ESP_FAIL;
+    return ESP_OK;
+}</code></pre>
+        <br>
+        <div class="post-text">
+            The issue of non-descriptive error codes should be clear now. ESP_ERR_NOT_SUPPORTED
+            is encoding an error that should mean "Received an invalid response while
+            initializing I2C bus 2". As the code description is not helpful, it will
+            take some time to track the error down the call stack to determine the
+            actual source and meaning of the code. Even this can be difficult if the
+            code is passed through many functions and aliased many times, especially
+            if the codebase makes heavy use of function pointers. This can be avoided 
+            by defining custom error codes, such as ERR_INIT_I2CBUS2_INVALID_RESPONSE,
+            for each potential failure point in the program.
+        </div>
+        <br>
+        <div class="post-text">
+            Searching for the failure will be easier, as a search through the codebase
+            for ERR_INIT_I2CBUS2_INVALID_RESPONSE will determine the source. In ESP-IDF,
+            a tag is added to each log statement, which is useful for determining the
+            source of a log. If the log is made at the bottom-level function where the
+            error is made, the tag can be used to mark which file or component the error
+            originated within. However, if the log is made at the top-level function to save
+            binary space on logging calls, then the search will be through the entire codebase.
+            In this case, it is important that the error code hints at where in the codebase
+            the error originates from. MAT_ERR_INIT_I2CBUS2_INVALID_RESPONSE is preferrable to ERR_INIT_I2CBUS2_INVALID_RESPONSE
+            because it hints at which component the error code belongs to. This idea can be
+            seen in the ESP-IDF error code header file below. Each BASE describes a particular section of ESP-IDF code, so the search is through
+            just a single section instead of the entire codebase.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">#define ESP_ERR_WIFI_BASE           0x3000  /* Starting number of WiFi error codes */
+#define ESP_ERR_MESH_BASE           0x4000  /* Starting number of MESH error codes */
+#define ESP_ERR_FLASH_BASE          0x6000  /* Starting number of flash error codes */
+#define ESP_ERR_HW_CRYPTO_BASE      0xc000  /* Starting number of HW cryptography module error codes */
+#define ESP_ERR_MEMPROT_BASE        0xd000  /* Starting number of Memory Protection API error codes */</code></pre>
+        <br>
+        <div class="post-text">
+            The reality of truly informative error handling is that functions return 
+            many error codes. The documentation <span class="text-aside">to the right</span><span class="text-center">below</span> 
+            describes the error codes that can be thrown by
+            a function that receives a register value from an I2C connected device, which
+            is guarded by a mutex. It is a bit verbose, as MAT_ERR_MUTEX and
+            MAT_ERR_MUTEX_TIMEOUT really can never happen. While I haven't done too much
+            research into static analyzers such as Frama-C, they may be helpful in reducing
+            the amount of runtime errors that need to be handled by a particular function.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">/** 
+* @returns ESP_OK if successful.
+* ESP_ERR_INVALID_ARG if invalid argument.
+* ESP_ERR_INVALID_STATE if requirement 1 is not met.
+* MAT_ERR_MUTEX if the device mutex could not be released.
+* MAT_ERR_MUTEX_TIMEOUT if a timeout occurred while retrieving the device mutex.
+* ESP_ERR_TIMEOUT if an I2C transaction timed out.
+* ESP_ERR_INVALID_RESPONSE if the matrix page could not be set properly.
+* ESP_ERR_NOT_SUPPORTED if an internal error was unhandled and the device mutex
+* is left in an unknown state.
+* ESP_FAIL if an unexpected error occurred. 
+*/</code></pre>
+        <br>
+        <div class="post-text">
+            Being verbose with error codes is positive for the reasons I have mentioned before,
+            however it does slow down development to perhaps an unacceptable degree, depending
+            on application requirements. One of the main reasons it is slow is that it requires determining
+            whether there are error code collisions within the codebase. This itself requires
+            well documented code to complete in a reasonable amount of time, which takes
+            up even more time. Below is the implementation of the function that can throw all of those errors. 
+            It contains bottom-level error logging with THROW_APP_ERR, error code aliasing,
+            custom error codes with codebase location hints, and selective error code collisions.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">esp_err_t matGetRegister(uint8_t *result, 
+                         i2c_master_dev_handle_t device, 
+                         uint8_t page, 
+                         uint8_t addr)
+{
+    esp_err_t err, err2;
+    /* input guards */
+    if (result == NULL) return ESP_ERR_INVALID_ARG;
+    if (page > 4) return ESP_ERR_INVALID_ARG;
+    // device validated by matSetPage
+
+    /* Set page and read config registers */
+    err = matSetPage(device, page); // acquires device mutex
+    if (err != ESP_OK) return (esp_err_t) err;
+    err = i2c_master_transmit_receive(device, &addr, 1, result, 1, I2C_TIMEOUT_MS);
+    // err handled after giving up device mutex
+    err2 = giveMatrixMutex(device);
+    if (err2 != ESP_OK) return (esp_err_t) MAT_ERR_MUTEX;
+    if (err == ESP_ERR_INVALID_ARG) return (esp_err_t) ESP_FAIL; // expected args to be ok
+    if (err != ESP_OK) THROW_APP_ERR((esp_err_t) err);
+    return (esp_err_t) ESP_OK;
+}</code></pre>
+        <br>
+        <div class="code-aside">
+            <div class="post-text">
+                The example keeps track of which return statements collide with
+                others in the function by casting error codes to esp_err_t. This
+                cast is meaningless to the compiler, but tells readers of the code
+                that they can be sure an error originated from a particular exit path
+                without having to scour the functions being called. For example,
+                it might seem that "return ESP_FAIL" will collide with "THROW_APP_ERR(err)",
+                however this is not true because i2c_master_transmit_receive does not
+                actually throw ESP_FAIL. This is similar to the MISRA-C guideline that
+                ignored error codes must be intentionally documented in the code by casting
+                the result to void. An example of this is in a best-effort function, such
+                as when an error has already occurred and indication to the user is simply
+                a courtesy.
+            </div>
+            <br>
+            <pre><code class="language-c code-right">void indicateError(void)
+{
+    /* best effort function */
+    (void) gpio_set_direction(ERR_LED_PIN, GPIO_MODE_OUTPUT);
+    (void) gpio_set_level(ERR_LED_PIN, 1);
+}</code></pre>
+        </div>
+        <br>
+        <div class="post-text">
+            Note that the error code ESP_ERR_INVALID_ARG in the example is colliding for
+            the conditions "result == NULL" and "page > 4". As I don't expect these to
+            be common errors, I decided they do not need to be distinguished. It should
+            be somewhat clear from other logs which case is occurring. Another way to
+            simplify the set of codes returned by the function could be to ignore mutex
+            errors and have them collide with ESP_FAIL because they should never occur.
+            Overall, proper error handling is time consuming, but debugging without it
+            is worse. There is an art in finding the middle ground between giving yourself
+            a rough idea of where a bug occurred and having a rough time squashing it.
+        </div>
+    <!-- footer -->   
+    <br>
+    <br>
+</div>
