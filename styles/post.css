@@ -40,7 +40,7 @@ span.text-center {
 
 .code-left {
     text-align: left;
-    border-radius: 10px; 
+    border-radius: 10px;
     margin-right: 50px;
     line-height: 100%;
 }
@@ -68,11 +68,17 @@ div.code-aside {
 }
 
 .code-left {
-    margin: 0px;
+    margin-top: 30px;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
 }
 
 .code-right {
-    margin: 0px;
+    margin-top: 30px;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
 }
 
 }
