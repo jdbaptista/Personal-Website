@@ -1,5 +1,13 @@
 {"posts": [
     {
+        "title": "Mocking ESP-IDF Components in VSCode",
+        "creation_year": 2025,
+        "creation_month": 5,
+        "creation_day": 10,
+        "filename": "post3",
+        "description": "Testing code can be difficult and is made easier with mocking frameworks such as CMock. This post describes a method to quickly mock ESP-IDF project components using the ESP-IDF VSCode extension."
+    },
+    {
         "title": "Informative Error Handling in C",
         "creation_year": 2025,
         "creation_month": 4,
@@ -14,5 +22,5 @@
         "creation_day": 7,
         "filename": "post1",
         "description": "Task creation can be dangerous, especially when a task is given a parameter that points to stack memory. This post explores ways to safely pass parameters to a new task while maintaining clean and future-proof code."
-    } 
+    }
 ]}

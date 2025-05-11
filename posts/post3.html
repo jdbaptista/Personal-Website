@@ -1,0 +1,290 @@
+<div id="post">
+    <div id="post-title">
+        Mocking ESP-IDF Components in VSCode
+    </div>
+    <div id="post-body">
+        <div class="post-text">
+            As projects grow in complexity, the possibility for issues also increases, which
+            brings the need for sophisitcated testing techniques. One such technique, called mocking, 
+            uses mock objects to simulate behavior of dependencies. This allows the programmer to test
+            a unit of code for correctness without depending on correct dependency implementations.
+            Another use of mocking that is particularly relevant when developing firmware 
+            is to remove/simulate hardware dependencies. This can allow the code under test to be run 
+            or emulated on another platform, such as Linux, which can significantly speed up the testing process.
+        </div>
+        <br>
+        <div class="post-text">
+            ESP-IDF has a method to mock ESP-IDF components that removes hardware dependencies
+            (which can only be run on Linux), however I struggled to find a simple way to run 
+            unit tests that required mocks of my own project components. I found this necessary
+            in order to test functions that have side effects, such as one that changes
+            the state of an LED indicator through a function in another component. The method 
+            I describe in this article allows you to mock project components using CMock when
+            developing with ESP-IDF under the ESP-IDF VSCode extension v1.10.0. The method exploits
+            the extension's multiple configuration feature to keep tests organized and uses some 
+            simple CMake to dynamically modify component sources. This article assumes you have
+            some familiarity with ESP-IDF and creating/testing project components. There are articles
+            in the ESP-IDF documentation that are helpful background, particularly the 'Build System'
+            and 'Unit Testing' API Guides.
+        </div>
+        <br>
+        <div class="post-text">
+            Before diving into the system, I will quickly note some of it's drawbacks. First, it
+            requires separate firmware images for each unique combination of mocked components.
+            Each image will need to be loaded onto the target separately, meaning there will be a
+            lot of time waiting for the images to flash and set up tests. Mocking works by replacing
+            a source file with another that contains functions of the same name. Thus, without a lot
+            of work in the build system, a mock function will not be able to refer to the original
+            function to 'turn off' the mock at runtime. CMock, for example, is not able to do this
+            (at least to my knowledge). Second, this method is designed for manual execution through
+            VSCode, although I will touch on a potential way of automating the process using idf.py
+            directly in the command line at the end of the article.
+        </div>
+        <br>
+        <div class="post-text">
+            The documentation for a function that will be used as an example is shown below. The unit
+            test written later will use mocks to verify that the function behaves in the way described.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">/**
+* @brief Queries the firmware version file to check whether an OTA update is
+* available or not. If so, indicateOTAUpdate is called.
+* 
+* @note If a patch update is available, but not a major/minor version change,
+* then this function sends a task notification to the OTA task which initiates
+* a firmware upgrade.
+* 
+* @requires:
+* - OTA task initialized.
+*/
+esp_err_t handleActionQueryOTA(void);</code></pre>
+        <br>
+        <div class="post-text">
+            The firmware version file is available on a central server, so there is
+            a dependency on the esp_http_client ESP-IDF component. Instead of esp_http_client
+            functions, the function will call queryOTAUpdateAvailable, which is a function
+            that exists in a project component named 'ota'. This can be mocked, removing 
+            the need to connect to the server. As a side note, this brings up the 
+            question of testing queryOTAUpdateAvailable without connecting to the server, 
+            which is difficult to do cleanly. I haven't tackled the problem yet, but I will 
+            note that ESP-IDF includes a mock of esp_http_client for Linux targets. Anyway,
+            the other dependency is on the 'indicators' project component, whose main header
+            file is shown below.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">esp_err_t indicateWifiConnected(void);
+esp_err_t indicateWifiNotConnected(void);
+esp_err_t indicateOTAAvailable(void);
+esp_err_t indicateOTAUpdate(void);
+esp_err_t indicateOTAFailure(int32_t delay);
+esp_err_t indicateOTASuccess(int32_t delay);
+esp_err_t indicateNorthbound(void);
+esp_err_t indicateSouthbound(void);
+esp_err_t indicateDirection(Direction dir);</code></pre>
+        <br>
+        <div class="post-text">
+            In order to mock the indicators component for this particular test, a new project configuration
+            is created in esp_idf_project_configuration.json or with the extension command "ESP-IDF: Open Project Configuration".
+            This configuration will look something like the following, which uses a series of sdkconfig default
+            files that define various build settings.
+        </div>
+        <br>
+        <pre><code class="language-c code-full">"test_actions": {
+    "build": {
+        "compileArgs": [],
+        "ninjaArgs": [],
+        "buildDirectoryPath": "/proj/builds/test_actions",
+        "sdkconfigDefaults": [
+        "/proj/configurations/sdkconfig.settings",
+        "/proj/configurations/secrets/sdkconfig.test_secrets",
+        "/proj/configurations/sdkconfig.test",
+        "/proj/components/actions/test/sdkconfig.test_actions",
+        "/proj/configurations/sdkconfig.V2_0_default"
+        ],
+        "sdkconfigFilePath": "/proj/configurations/current/sdkconfig.test_actions"
+    },
+    "env": {
+        "executable": "test_actions"
+    },
+    "idfTarget": "esp32s3",
+    "flashBaudRate": "",
+    "monitorBaudRate": "",
+    "openOCD": {
+        "debugLevel": 0,
+        "args": []
+    },
+    "tasks": {
+        "preBuild": "",
+        "preFlash": "",
+        "postBuild": "",
+        "postFlash": ""
+    }
+}</code></pre>
+        <br>
+        <div class="post-text">
+            The default files of note are 'sdkconfig.test' and 'sdkconfig.test_actions', which
+            define configuration macros for all testing builds and specifically the actions test build, respectively.
+            The 'sdkconfigFilePath' is set to a location that is different from other builds
+            in order to reduce the amount of time spent building the entire ESP-IDF library.
+            Finally, the 'executable' environment variable is the method's secret sauce,
+            which will define which app_main to execute from and define the components to test.
+            The 'sdkconfig.test_actions' file is contained in the test component of the actions 
+            component and contains configuration options that control which components are mocked.
+        </div>
+        <br>
+        <pre><code class="language-c code-full"># macro extern definitions
+CONFIG_UTILS_EXTERN_MACROS=y
+
+# list of mocked components for action unit tests
+CONFIG_MOCK_HTTP_WRAP=y
+CONFIG_MOCK_OTA=y
+CONFIG_MOCK_INDICATORS=y
+CONFIG_MOCK_APP_ERRORS=y
+CONFIG_MOCK_REFRESH=y # to avoid util extern macro conflicts</code></pre>
+    <br>
+    <div class="post-text">
+        I have two things to note about this file. First, I find it useful to replace certain setting macros
+        with extern variables at times when testing to modify their values without rebuilding the entire
+        image, however I am not sure whether this is a good programming practice. Second, there is only
+        one 'test' component for each of your project components, however different unit tests may require
+        different sets of mocked components. This issue can be solved by defining a configuration option
+        that controls which tests get compiled and creating multiple 'sdkconfig.test_actions' files that contain
+        a unique value for this option and unique set of mocks.
+    </div>
+    <br>
+    <div class="code-aside">
+        <div class="post-text">
+            In order to actually create the CMock source files, you can put the main CMock file path in your environment,
+    navigate to the component you will create a mock for, and run a command like "ruby $Env:cmock -o CMockConfig.yml include/indicators.h".
+    Small tip, if this command throws an error referencing "CMockConfig" instead of "CMockConfig.yml", your file probably contains
+    a syntax error. Espressif is nice enough to link the CMock source files into a component called 'cmock'. With this and a
+    mocking configuration option in the project component's Kconfig file, the component's CMakeLists.txt file can control
+    whether the mock source file replaces the regular file.
+        </div>
+        <br>
+        <pre><code class="language-c code-right">set(srcs "src/indicators.c")
+set(include_dirs "include")
+set(requires common app_errors animations)
+
+if (CONFIG_MOCK_INDICATORS)
+    set(srcs "mocks/Mockindicators.c")
+    list(APPEND include_dirs "mocks")
+    list(APPEND requires cmock)
+endif ()
+
+idf_component_register(SRCS ${srcs}
+                    INCLUDE_DIRS ${include_dirs}
+                    REQUIRES ${requires})</code></pre>
+    </div>  
+    <br>
+    <div class="post-text">
+        The app_main executable is chosen based on the 'executable' environment variable set in the
+        project configuration. This variable also controls what the TEST_COMPONENTS variable is set to
+        in the top-level CMakeLists.txt file. An environment variable is used here instead of a
+        configuration option because TEST_COMPONENTS is set before any ESP-IDF CMake functions are loaded.
+    </div>
+    <br>
+    <pre><code class="language-c code-full">// in top-level CMakeLists.txt...
+message(STATUS "executable: $ENV{executable}")
+if ("$ENV{executable}" STREQUAL "main")
+    # no work
+elseif ("$ENV{executable}" STREQUAL "test_actions")
+    set(TEST_COMPONENTS "actions")
+elseif ("$ENV{executable}" STREQUAL "test_nonmock")
+    set(TEST_COMPONENTS "animations api_connect app_errors app_nvs common indicators led_matrix refresh routines")
+else()
+    message(FATAL_ERROR "Value of executable environment variable \"$ENV{executable}\" is not known!")
+endif()
+
+// in main component CMakeLists.txt...
+if ("$ENV{executable}" STREQUAL "main")
+    set(srcs "src/main.c"
+             "src/initialize.c")
+elseif ("$ENV{executable}" STREQUAL "test_actions")
+    set(srcs "../components/actions/test/test_actions_main.c")
+elseif ("$ENV{executable}" STREQUAL "test_nonmock")
+    set(srcs "src/tests/test_nonmock_main.c"
+             "src/initialize.c") // dependency of test_nonmock_main.c
+else()
+    message(FATAL_ERROR "Value of executable environment variable \"$ENV{executable}\" is not known!")
+endif()</code></pre>
+    <br>
+    <div class="post-text">
+        To explain the system concisely, the 'executable' environment variable controls
+        which app_main file and test components are compiled. An sdkconfig.default
+        file controls which components use their CMock replacements, and a test configuration
+        option set in the file controls the unit tests that are compiled. Going back to the original
+        example, CMock functions can now be used to verify that indicateOTAUpdate was called
+        exactly once and no other indicators were called. Mocking the OTA component and task requires its
+        own setup, but once everything is together the product is as follows.
+    </div>
+    <br>
+    <pre><code class="language-c code-full">#if CONFIG_ACTIONS_MAIN == 1
+
+/**
+    * @brief Tests that queryOTA action sends a task notification to the OTA
+    * task only if a patch update is available.
+    */
+TEST_CASE("queryOTA_patchUpdateNotif", "[actions]")
+{
+    const int testPrio = uxTaskPriorityGet(NULL);
+    SemaphoreHandle_t sema;
+    TaskHandle_t otaMockTask;
+    BaseType_t success;
+
+    /* setup mock functions */
+    Mockota_Init(); // inits CMock globally
+    bool dummy;
+    queryOTAUpdateAvailable_ExpectAndReturn(&dummy, &dummy, ESP_OK);
+    queryOTAUpdateAvailable_IgnoreArg_available();
+    queryOTAUpdateAvailable_IgnoreArg_patch();
+    bool retAvailable = true;
+    bool retPatch = true;
+    queryOTAUpdateAvailable_ReturnThruPtr_available(&retAvailable);
+    queryOTAUpdateAvailable_ReturnThruPtr_patch(&retPatch);
+
+    indicateOTAAvailable_IgnoreAndReturn(ESP_OK);
+
+    // the vSendsNotifOTAMock is given a higher priority than the test task,
+    // so by the time handleActionQueryOTA returns the task should have set
+    // the binary mutex and returned to sleep.
+    sema = xSemaphoreCreateBinary();
+
+    success = xTaskCreate(vSendsNotifOTAMock, "otaMock", 2000, sema, testPrio + 1, &otaMockTask);
+    TEST_ASSERT_EQUAL(pdPASS, success);
+    getOTATask_IgnoreAndReturn(otaMockTask);
+    
+    /* perform test */
+    handleActionQueryOTA();
+
+    /* check test results */
+    success = xSemaphoreTake(sema, 0);
+    TEST_ASSERT_EQUAL(pdTRUE, success);
+
+    Mockota_Verify();
+    Mockindicators_Verify();
+
+    /* cleanup test resources */
+    Mockota_Destroy();
+
+    vTaskDelete(otaMockTask);
+    vSemaphoreDelete(sema);
+
+    ... // more testing
+}
+
+#endif /* CONFIG_ACTIONS_MAIN == 1 */</code></pre>
+    <br>
+    As stated in the beginning of the article, this process is with the VSCode extension, which
+    is not directly automateable. I believe the extension implements multiple configurations with
+    idf.py argument files, which are documented in the ESP-IDF documentation. I also believe that
+    there is good integration between the Unity test framework and pytest if full automation in a
+    CI/CD pipeline is your ultimate goal, although it is not something I have researched deeply yet.
+    Another topic that may be interesting is testing with multiple tasks executing concurrently and
+    ignoring particular mocked functions in some tasks but not others.
+    Good luck testing!
+    </div>
+    <!-- footer --> 
+    <br>
+    <br>
+</div>
