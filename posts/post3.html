@@ -159,22 +159,24 @@ CONFIG_MOCK_REFRESH=y # to avoid util extern macro conflicts</code></pre>
     Small tip, if this command throws an error referencing "CMockConfig" instead of "CMockConfig.yml", your file probably contains
     a syntax error. Espressif is nice enough to link the CMock source files into a component called 'cmock'. With this and a
     mocking configuration option in the project component's Kconfig file, the component's CMakeLists.txt file can control
-    whether the mock source file replaces the regular file.
+    whether the mock source file replaces the regular file. Note that component requirements should not depend on configuration choices
+    because requirements are expanded before configuration is loaded.
         </div>
         <br>
         <pre><code class="language-c code-right">set(srcs "src/indicators.c")
 set(include_dirs "include")
-set(requires common app_errors animations)
 
 if (CONFIG_MOCK_INDICATORS)
     set(srcs "mocks/Mockindicators.c")
     list(APPEND include_dirs "mocks")
-    list(APPEND requires cmock)
 endif ()
 
 idf_component_register(SRCS ${srcs}
                     INCLUDE_DIRS ${include_dirs}
-                    REQUIRES ${requires})</code></pre>
+                    REQUIRES common
+                             app_errors
+                             animations
+                             cmock)</code></pre>
     </div>  
     <br>
     <div class="post-text">
